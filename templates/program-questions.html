@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block title %}Questions - {{ program }}{% endblock %}
+
+{% block content %}
+<div class="section">
+    <div class="main-column">
+        <h1>Questions</h1>
+
+        <table class="nice">
+            <tr>
+                <th>Question</th>
+                <th>Type</th>
+                <th>Required</th>
+                <th>Actions</th>
+            </tr>
+            <tr>
+                <td>Name</td>
+                <td>Text</td>
+                <td><i class="fa fa-check green"></i></td>
+                <td class="empty">Built in</td>
+            </tr>
+            <tr>
+                <td>Email</td>
+                <td>Email</td>
+                <td><i class="fa fa-check green"></i></td>
+                <td class="empty">Built in</td>
+            </tr>
+            {% for question in questions %}
+            <tr>
+                <td>{{ question.question }}</td>
+                <td>{{ question.get_type_display }}</td>
+                <td>
+                    {% if question.required %}
+                        <i class="fa fa-check green"></i>
+                    {% else %}
+                        <i class="fa fa-times red"></i>
+                    {% endif %}
+                </td>
+                <td>
+                    <a href="{{ question.urls.edit }}">Edit</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+        <h3>Create a new question</h3>
+        <form action="." method="POST">
+            {% include "_form.html" %}
+        </form>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,606 @@
+/* Body styles */
+/*
+    Body layout is a 4-column grid. Columns are 250, spacing 50.
+    Two cols is 550. Three cols is 850. Four is 1150.
+*/
+
+body {
+    font-size: 16px;
+    min-height: 100%;
+    font-family: Helvetica, Arial, sans-serif;
+    height: 100%;
+}
+
+
+/* Header */
+
+.header {
+    background: #333;
+    overflow: hidden;
+}
+    .primary-nav {
+        width: 1170px;
+        margin-left: auto;
+        margin-right: auto;
+        overflow: hidden;
+    }
+        .primary-nav li {
+            float: left;
+            display: block;
+        }
+            .primary-nav li a {
+                float: left;
+                position: relative;
+                margin: 0 5px 0 5px;
+                padding: 10px 5px 10px 5px;
+                text-decoration: none;
+                color: #eee;
+                font-size: 1em;
+            }
+            .primary-nav li a:hover {
+                border-bottom: 3px solid #E72D52;
+                padding-bottom: 7px;
+            }
+            .primary-nav li.home {
+                font-weight: bold;
+                text-transform: uppercase;
+            }
+            .primary-nav li.right {
+                float: right;
+            }
+
+/* Content wrapper */
+
+.content {
+    overflow: hidden;
+}
+
+
+/* General page layout */
+
+p {
+    line-height: 160%;
+    margin-bottom: 1.5em;
+}
+
+strong,
+b {
+    font-weight: bold;
+}
+
+em {
+    font-style: italic;
+}
+
+h1 {
+    font-size: 40px;
+    font-family: alte_din;
+    color: #0e232e;
+    margin: 30px 0 25px 0;
+}
+    h1:first-child {
+        margin-top: 0px;
+    }
+
+h2 {
+    font-size: 200%;
+    font-family: alte_din;
+    color: #0e232e;
+    margin: 30px 0 12px 0;
+}
+
+h3 {
+    font-size: 24px;
+    font-family: alte_din;
+    color: #0e232e;
+    margin: 20px 0 12px 0;
+}
+
+h4 {
+    text-transform: uppercase;
+    font-size: 16px;
+    font-family: alte_din;
+    color: #6c7d84;
+    margin: 16px 0 12px 0;
+}
+
+pre {
+    font-family: monospace;
+    line-height: 140%;
+    font-size: 14px;
+    overflow: auto;
+}
+
+a {
+    text-decoration: none;
+    color: #3F6492;
+}
+    a:hover {
+        text-decoration: underline;
+    }
+
+.body-text ul {
+    list-style-type: disc;
+    margin: 1.5em 0;
+}
+    .body-text li {
+        margin: 1em 0 1em 2em;
+    }
+
+.section {
+    width: 1150px;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+}
+
+    .section > h2:first-of-type {
+        margin-top: 0;
+    }
+    .section .empty {
+        font-size: 14px;
+        color: #888;
+        font-style: italic;
+    }
+
+.main-column {
+    float: left;
+    width: 850px;
+    position: relative;
+}
+
+.left-column {
+    float: left;
+    width: 550px;
+    position: relative;
+}
+
+.right-column {
+    float:right;
+    width: 550px;
+    position: relative;
+}
+
+.secondary-column {
+    float: right;
+    width: 250px;
+    margin-left: 50px;
+}
+    .secondary-column h3 {
+        margin: 20px 0 10px 0;
+        text-transform: uppercase;
+        font-size: 16px;
+        font-family: alte_din;
+        color: #444;
+    }
+    .secondary-column h3:first-child {
+        margin-top: 0;
+    }
+    .secondary-column p {
+        margin: 10px 0 10px 0;
+        color: #222;
+        font-size: 14px;
+    }
+
+.nowrap {
+    white-space: nowrap;
+}
+
+.help-sidebar h3 {
+    color: #6c7d84;
+}
+.help-sidebar p {
+    color: #555;
+}
+
+.archive-intro {
+    margin-top: -0.8em;
+    color: #444;
+    font-style: italic;
+}
+
+.green {
+    color: #3F9650;
+}
+
+.red {
+    color: #A63030;
+}
+
+/* Program header */
+
+.program-header h1 {
+    float: left;
+    font-size: 140%;
+    margin: 20px 0;
+}
+
+.program-home .program-header h1 {
+    font-size: 200%;
+}
+
+.subnav {
+    margin: 20px 0;
+    overflow: hidden;
+    float: right;
+}
+    .subnav li {
+        float: left;
+    }
+        .subnav li a {
+            float: left;
+            padding: 5px 5px;
+            margin: 0 5px;
+        }
+
+/* Buttons */
+
+.button {
+    position: relative;
+    padding: 6px 0.8em;
+    color: #fff;
+    background-color: #0084c8;
+    border: none;
+    border-radius: 3px;
+    border-bottom: 1px solid #036;
+    text-decoration: none;
+    font-style: normal;
+    font-size: 100%;
+}
+    a.button {
+        padding-bottom: 7px;
+    }
+    .button:active {
+        top: 1px;
+        border-bottom: 1px solid rgba(0, 0, 0, 0);
+    }
+    .button.prominent {
+        background-color: #09a3f2;
+    }
+    .button.create {
+        background-color: #2C954C;
+    }
+    .button.serious {
+        background-color: #651212;
+    }
+    .button.inline {
+        margin: 0 0.6em;
+    }
+
+.buttons {
+    display: block;
+    padding: 10px 0;
+}
+
+/* Form styles */
+
+.field {
+    margin: 0 0 1em 0;
+}
+    .field label span {
+        display: block;
+        font-size: 16px;
+        text-transform: uppercase;
+    }
+    .field input {
+        display: block;
+        font-size: 18px;
+        border: 1px solid #666;
+        padding: 5px;
+        margin: 7px 0 5px 0;
+    }
+    .field textarea {
+        display: block;
+        font-size: 18px;
+        border: 1px solid #666;
+        padding: 5px;
+        margin: 7px 0 5px 0;
+    }
+    .field select {
+        display: block;
+        font-size: 18px;
+        margin: 7px 0 5px 0;
+        border: 1px solid #666;
+        padding: 5px;
+    }
+    .field input[name="title"] {
+        width: 90%;
+    }
+    .field .help-text {
+        font-size: 14px;
+        color: #555;
+        margin: 0 0 5px 0;
+    }
+
+.errorlist {
+    color: #600;
+    font-size: 14px;
+    font-weight: bold;
+}
+    .errorlist li {
+        margin: 0 0 5px 0;
+    }
+
+form .buttons .button {
+    font-size: 18px;
+    font-family: alte_din;
+}
+
+form.inline {
+    display: inline;
+}
+    form.inline .buttons .button {
+        font-size: 100%;
+        font-family: alte_din;
+    }
+
+/* Nice tables */
+
+table.nice {
+    width: 100%;
+}
+    table.nice th {
+        text-transform: uppercase;
+        color: #888;
+        font-weight: bold;
+        text-align: left;
+        padding: 0 10px 15px 10px;
+        vertical-align: middle;
+    }
+    table.nice td {
+        padding: 5px 10px 5px 10px;
+        vertical-align: middle;
+    }
+    table.nice a {
+        text-decoration: none;
+        font-weight: bold;
+        color: inherit;
+    }
+
+
+/*****************
+ *****************
+       750px
+ *****************
+ *****************/
+
+@media (max-width: 1150px) {
+
+.header,
+.section {
+    width: 750px;
+}
+
+.primary-nav .home {
+    display: none;
+}
+
+.section-page .article-main {
+    width: 740px;
+    font-size: 90%;
+}
+    .section-page .article-main img {
+        left: -175px;
+    }
+    .section-page .article-main h2 {
+        font-size: 230%;
+    }
+    .section-page .article-main .pre-title,
+    .section-page .article-main h2,
+    .section-page .article-main p,
+    .section-page .article-main .meta {
+        margin-left: 390px;
+    }
+
+.section-page .article-secondary {
+    width: 350px;
+    font-size: 90%;
+}
+    .section-page .article-secondary h2 {
+        font-size: 190%;
+    }
+
+.section-page .article-tertiary {
+    width: 230px;
+}
+    .section-page .article-tertiary {
+        margin-right: 30px;
+    }
+    .section-page .article-tertiary:nth-child(4n) {
+        margin-right: 30px;
+    }
+    .section-page .article-tertiary:nth-child(4n+1) {
+        clear: none;
+    }
+    .section-page .article-tertiary:nth-child(3n) {
+        margin-right: 0;
+    }
+    .section-page .article-tertiary:nth-child(3n+1) {
+        clear: left;
+    }
+
+.header-image {
+    width: 750px;
+    border-top: 4px solid #0084c8;
+}
+
+.body-text .image-left,
+.body-text .image-right {
+    width: 250px;
+    font-size: 90%;
+}
+
+.main-column {
+    width: 750px;
+}
+
+.secondary-column {
+    clear: left;
+}
+
+
+/*****************
+ *****************
+       250px
+ *****************
+ *****************/
+
+@media (max-width: 767px) {
+
+    .main-column {
+        width: 100%;
+    }
+
+    .header,
+    .section {
+        width: 90%;
+        margin-left: 5%;
+        margin-right: 5%;
+    }
+
+    .header,
+    .has-edit-bar .header,
+    .article-page .header {
+        margin-top: 10px;
+    }
+
+    .header .logo {
+        float: none;
+        width: 145px;
+        margin: 0px auto 5px auto;
+    }
+        .header .logo img {
+            width: 145px;
+        }
+
+    .primary-nav {
+        float: none;
+        padding: 4px 0;
+        margin: 0 0 8px 0;
+        line-height: 25px;
+        text-align: center;
+    }
+        .primary-nav li {
+            float: none;
+            display: inline;
+            white-space: nowrap;
+        }
+            .primary-nav li a {
+                float: none;
+                display: inline;
+                border-bottom: 0;
+                white-space: nowrap;
+            }
+            .primary-nav li a:hover,
+            .primary-nav li.selected a {
+                border-bottom: 0;
+            }
+
+    .header-image {
+        margin-top: 10px;
+    }
+
+    .edit-bar {
+        display: none;
+    }
+
+    .not-mobile {
+        display: none !important;
+    }
+
+    .top-article {
+        margin-top: 10px;
+    }
+
+    .section-page .article-main {
+        width: 100%;
+        border-left: 0;
+        border-top: 5px solid #0084c8;
+        float: none;
+        margin: 0 0 20px 0;
+    }
+        .section-page .article-main img {
+            position: inherit;
+            left: 0;
+            float: none;
+            width: 100%;
+        }
+        .section-page .article-main .pre-title,
+        .section-page .article-main h2,
+        .section-page .article-main p,
+        .section-page .article-main .meta {
+            margin-left: 10px;
+        }
+
+    .section-page .article-secondary {
+        width: 100%;
+        font-size: 90%;
+        border-top: 5px solid #0084c8;
+    }
+
+    .section-page .article-tertiary {
+        width: 100%;
+    }
+
+    h1 {
+        font-size: 180%;
+        margin: 10px 0 20px 0;
+    }
+
+    h1 .header-secondary {
+        float: none;
+        width: auto;
+        text-align: left;
+        font-size: 70%;
+        margin-left: 0;
+    }
+
+    h2 {
+        font-size: 150%;
+    }
+
+    .article-page h1 {
+        font-size: 35px;
+        margin-bottom: 15px;
+    }
+
+    .article-page .header-secondary .score-stars {
+        font-size: 80%;
+        left: 0;
+    }
+
+    .body-text .image-left,
+    .body-text .image-right {
+        width: 300px;
+        float: none;
+        font-size: 90%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .read-more a {
+        display: block;
+    }
+
+    table.articles td {
+        display: block;
+    }
+        table.articles td.article-image {
+            float: left;
+        }
+        table.articles td.article-title-and-lead {
+            margin-left: 45px;
+            padding-bottom: 5px;
+        }
+        table.articles td.published {
+            font-size: 90%;
+            padding-bottom: 35px;
+        }
+            table.articles td.published .date,
+            table.articles td.published .author {
+                display: inline;
+            }
+            table.articles td.published .author {
+                margin-left: 0.6em;
+            }
+}

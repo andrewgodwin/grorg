@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block whole_title %}Grants{% endblock %}
+
+{% block content %}
+<div class="section">
+    <div class="main-column">
+        {% for program in programs %}
+            <p>
+                <a href="{{ program.urls.view }}">{{ program.name }}</a>
+            </p>
+        {% empty %}
+            <p class="empty">No programs are available at this time.</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

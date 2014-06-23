@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>{% block whole_title %}{% block title %}{% endblock %} - Grorg{% endblock %}</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="/static/css/reset.css" type="text/css" media="screen" />
+	<link rel="stylesheet" href="/static/fonts/alte_din/stylesheet.css" type="text/css" media="screen" />
+	<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="/static/css/select2.css" type="text/css" media="screen" />
+	<link rel="stylesheet" href="/static/css/style.css" type="text/css" media="screen" />
+	<script src="/static/js/jquery-1.9.1.min.js" type="text/javascript"></script>
+	<script src="/static/js/select2.js" type="text/javascript"></script>
+	{% block extra_head %}{% endblock %}
+</head>
+<body class="{% block body_class %}{% endblock %}">
+
+	{% block edit_bar %}{% endblock %}
+
+	<div class="header" style="{% block header_style %}{% endblock %}">
+		<ul class="primary-nav">
+			<li class="home"><a href="/">Grorg</a></li>
+			<li class="right"><a href="/">Log In</a></li>
+		</ul>
+	</div>
+
+	{% if messages %}
+		<ul class="messages">
+			{% for message in messages %}
+			<li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+			{% endfor %}
+		</ul>
+	{% endif %}
+
+	<div class="content">
+		{% if program %}
+		<div class="section program-header">
+    		<div class="left-column">
+				<h1>{{ program }}</h1>
+			</div>
+    		<div class="right-column">
+				<ul class="subnav">
+					<li><a href="{{ program.urls.questions }}">Questions</a></li>
+					<li><a href="{{ program.urls.applications }}">Applications</a></li>
+					<li><a href="{{ program.urls.users }}">Users</a></li>
+					<li><a href="{{ program.urls.admin }}">Admin</a></li>
+				</ul>
+			</div>
+		</div>
+		{% endif %}
+		{% block content %}
+		{% endblock %}
+	</div>
+
+
+</body>
+</html>
