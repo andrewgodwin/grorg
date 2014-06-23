@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block title %}Applications - {{ program }}{% endblock %}
+
+{% block content %}
+<div class="section">
+    <div class="main-column">
+        <h1>Applications</h1>
+
+        <table class="nice">
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Applied</th>
+                <th>Actions</th>
+            </tr>
+            {% for application in applications %}
+            <tr>
+                <td>{{ application.name }}</td>
+                <td>{{ application.email }}</td>
+                <td>{{ application.applied|date:"j M Y P" }}</td>
+                <td>
+                    <a href="{{ application.urls.view }}">View</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+</div>
+{% endblock %}

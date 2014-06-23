@@ -27,6 +27,8 @@ class Program(models.Model):
         applications = "{view}applications/"
         users = "{view}users/"
         admin = "{view}admin/"
+        apply = "{view}apply/"
+        apply_success = "{view}apply/success/"
 
 
 class Resource(models.Model):
@@ -64,7 +66,8 @@ class Question(models.Model):
 
     TYPE_CHOICES = [
         ("boolean", "Yes/No"),
-        ("text", "Text"),
+        ("text", "Short text"),
+        ("textarea", "Long text"),
         ("integer", "Integer value"),
     ]
 
@@ -88,9 +91,12 @@ class Applicant(models.Model):
 
     program = models.ForeignKey(Program, related_name="applicants")
     name = models.TextField()
-    email = models.TextField()
+    email = models.EmailField()
 
     applied = models.DateTimeField(blank=True, null=True)
+
+    class urls(Urls):
+        view = "{self.program.urls.applications}{self.id}/"
 
 
 class Answer(models.Model):

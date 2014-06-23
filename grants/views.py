@@ -1,6 +1,9 @@
+import collections
+from django import forms
+from django.utils import timezone
 from django.shortcuts import render, redirect
 from django.views.generic import View
-from .models import Program, Question
+from .models import Program, Question, Answer, Applicant
 from .forms import QuestionForm
 
 
@@ -54,7 +57,7 @@ class ProgramQuestions(ProgramView):
             question.save()
             return redirect(".")
         else:
-            self.render("program-question-edit.html", {
+            return self.render("program-question-edit.html", {
                 "form": form,
             })
 
@@ -88,3 +91,88 @@ class ProgramQuestionEdit(ProgramView):
                 "form": form,
                 "question": question,
             })
+
+
+class ProgramApply(ProgramView):
+    """
+    Lets you apply for a program.
+    """
+
+    def get_form(self):
+        fields = collections.OrderedDict([
+            ("name", forms.CharField(required=True)),
+            ("email", forms.EmailField(required=True)),
+        ])
+        for question in self.program.questions.order_by("order"):
+            widget = forms.Textarea if question.type == "textarea" else None
+            fields["question-%s" % question.id] = {
+                "boolean": forms.BooleanField,
+                "text": forms.CharField,
+                "textarea": forms.CharField,
+                "integer": forms.IntegerField,
+            }[question.type](required=question.required, widget=widget, label=question.question)
+        return type("ApplicationForm", (forms.Form, ), fields)
+
+    def get(self, request):
+        if request.method == "POST":
+            form = self.get_form()(request.POST)
+            if form.is_valid():
+                applicant = Applicant.objects.create(
+                    program = self.program,
+                    name = form.cleaned_data["name"],
+                    email = form.cleaned_data["email"],
+                    applied = timezone.now(),
+                )
+                for question in self.program.questions.order_by("order"):
+                    value = form.cleaned_data.get("question-%s" % question.id, None) or None
+                    if value:
+                        Answer.objects.create(
+                            applicant = applicant,
+                            question = question,
+                            answer = value,
+                        )
+                return redirect(self.program.urls.apply_success)
+        else:
+            form = self.get_form()
+        return self.render("program-apply.html", {
+            "form": form,
+        })
+
+    post = get
+
+
+class ProgramApplySuccess(ProgramView):
+    """
+    Shown after you've applied.
+    """
+
+    def get(self, request):
+        return self.render("program-apply-success.html", {})
+
+
+class ProgramApplications(ProgramView):
+    """
+    Shows applications to the program.
+    """
+
+    def get(self, request):
+        applications = self.program.applicants.order_by("-applied")
+        return self.render("program-applications.html", {
+            "applications": applications,
+        })
+
+
+class ProgramApplicationView(ProgramView):
+    """
+    Shows an individual application.
+    """
+
+    def get(self, request, application_id):
+        application = self.program.applicants.get(pk=application_id)
+        questions = list(self.program.questions.order_by("order"))
+        for question in questions:
+            question.answer = question.answers.filter(applicant=application).first()
+        return self.render("program-application-view.html", {
+            "application": application,
+            "questions": questions,
+        })

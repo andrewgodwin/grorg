@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block title %}{{ application.name }} - {{ program }}{% endblock %}
+
+{% block content %}
+<div class="section">
+    <div class="main-column">
+        <h1>{{ application.name }}</h1>
+
+        {% for question in questions %}
+            <h4>{{ question.question }}</h4>
+            {% if question.answer %}
+                <p>
+                    {{ question.answer.answer|linebreaksbr }}
+                </p>
+            {% else %}
+                <p class="empty">
+                    Not answered.
+                </p>
+            {% endif %}
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
