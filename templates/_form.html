@@ -1,5 +1,6 @@
 <form action="{{ action|default:"." }}" method="POST">
     {% csrf_token %}
+    {{ form.non_field_errors }}
     {% for field in form.visible_fields %}
         {% include "_field.html" %}
     {% endfor %}

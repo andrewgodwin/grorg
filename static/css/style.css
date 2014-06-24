@@ -311,11 +311,17 @@ a {
         color: #555;
         margin: 0 0 5px 0;
     }
+    .field .required {
+        display: inline;
+        font-size: 10px;
+        color: #900;
+    }
 
 .errorlist {
     color: #600;
     font-size: 14px;
     font-weight: bold;
+    margin: 10px 0;
 }
     .errorlist li {
         margin: 0 0 5px 0;

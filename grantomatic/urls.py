@@ -1,16 +1,17 @@
 from django.conf.urls import include, url
 from django.contrib import admin
-from grants import views
+from grants.views import program, bulk_load
 
 urlpatterns = [
-    url(r'^$', 'grants.views.index'),
-    url(r'^(?P<program>[^/]+)/$', views.ProgramHome.as_view()),
-    url(r'^(?P<program>[^/]+)/questions/$', views.ProgramQuestions.as_view()),
-    url(r'^(?P<program>[^/]+)/questions/(?P<question_id>[^/]+)/$', views.ProgramQuestionEdit.as_view()),
-    url(r'^(?P<program>[^/]+)/apply/$', views.ProgramApply.as_view()),
-    url(r'^(?P<program>[^/]+)/apply/success/$', views.ProgramApplySuccess.as_view()),
-    url(r'^(?P<program>[^/]+)/applications/$', views.ProgramApplications.as_view()),
-    url(r'^(?P<program>[^/]+)/applications/(?P<application_id>[^/]+)/$', views.ProgramApplicationView.as_view()),
-
+    url(r'^$', 'grants.views.program.index'),
     url(r'^admin/', include(admin.site.urls)),
+    url(r'^(?P<program>[^/]+)/$', program.ProgramHome.as_view()),
+    url(r'^(?P<program>[^/]+)/questions/$', program.ProgramQuestions.as_view()),
+    url(r'^(?P<program>[^/]+)/questions/(?P<question_id>[^/]+)/$', program.ProgramQuestionEdit.as_view()),
+    url(r'^(?P<program>[^/]+)/apply/$', program.ProgramApply.as_view()),
+    url(r'^(?P<program>[^/]+)/apply/success/$', program.ProgramApplySuccess.as_view()),
+    url(r'^(?P<program>[^/]+)/applicants/$', program.ProgramApplicants.as_view()),
+    url(r'^(?P<program>[^/]+)/applicants/bulk/$', bulk_load.BulkLoadApplicants.as_view()),
+    url(r'^(?P<program>[^/]+)/applicants/(?P<applicant_id>[^/]+)/$', program.ProgramApplicantView.as_view()),
+
 ]

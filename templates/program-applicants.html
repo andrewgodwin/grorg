@@ -1,11 +1,11 @@
 {% extends "base.html" %}
 
-{% block title %}Applications - {{ program }}{% endblock %}
+{% block title %}Applicants - {{ program }}{% endblock %}
 
 {% block content %}
 <div class="section">
     <div class="main-column">
-        <h1>Applications</h1>
+        <h1>Applicants</h1>
 
         <table class="nice">
             <tr>
@@ -14,17 +14,19 @@
                 <th>Applied</th>
                 <th>Actions</th>
             </tr>
-            {% for application in applications %}
+            {% for applicant in applicants %}
             <tr>
-                <td>{{ application.name }}</td>
-                <td>{{ application.email }}</td>
-                <td>{{ application.applied|date:"j M Y P" }}</td>
+                <td>{{ applicant.name }}</td>
+                <td>{{ applicant.email }}</td>
+                <td>{{ applicant.applied|date:"j M Y P" }}</td>
                 <td>
-                    <a href="{{ application.urls.view }}">View</a>
+                    <a href="{{ applicant.urls.view }}">View</a>
                 </td>
             </tr>
             {% endfor %}
         </table>
+
+        <a href="{{ program.urls.applicants_bulk }}">Bulk load</a>
     </div>
 </div>
 {% endblock %}

@@ -1,6 +1,6 @@
 <div class="field">
     <label>
-        <span>{{ field.label }}</span>
+        <span>{{ field.label }} {% if field.field.required %}<span class="required">(required)</span>{% endif %}</span>
         {{ field }}
         {% if field.help_text %}<p class="help-text">{{ field.help_text }}</p>{% endif %}
         {{ field.errors }}

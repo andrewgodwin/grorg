@@ -18,13 +18,14 @@ class Program(models.Model):
 
     completed = models.BooleanField(default=False)
 
-    def __str__(self):
+    def __unicode__(self):
         return self.name
 
     class urls(Urls):
         view = "/{self.slug}/"
         questions = "{view}questions/"
-        applications = "{view}applications/"
+        applicants = "{view}applicants/"
+        applicants_bulk = "{view}applicants/bulk/"
         users = "{view}users/"
         admin = "{view}admin/"
         apply = "{view}apply/"
@@ -95,8 +96,16 @@ class Applicant(models.Model):
 
     applied = models.DateTimeField(blank=True, null=True)
 
+    class Meta:
+        unique_together = [
+            ("program", "email"),
+        ]
+
     class urls(Urls):
-        view = "{self.program.urls.applications}{self.id}/"
+        view = "{self.program.urls.applicants}{self.id}/"
+
+    def __unicode__(self):
+        return self.name
 
 
 class Answer(models.Model):

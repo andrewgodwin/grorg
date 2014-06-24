@@ -1,11 +1,11 @@
 {% extends "base.html" %}
 
-{% block title %}{{ application.name }} - {{ program }}{% endblock %}
+{% block title %}{{ applicant.name }} - {{ program }}{% endblock %}
 
 {% block content %}
 <div class="section">
     <div class="main-column">
-        <h1>{{ application.name }}</h1>
+        <h1>{{ applicant.name }}</h1>
 
         {% for question in questions %}
             <h4>{{ question.question }}</h4>
