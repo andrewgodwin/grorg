@@ -12,7 +12,9 @@ urlpatterns = [
     url(r'^(?P<program>[^/]+)/apply/success/$', program.ProgramApplySuccess.as_view()),
     url(r'^(?P<program>[^/]+)/applicants/$', program.ProgramApplicants.as_view()),
     url(r'^(?P<program>[^/]+)/applicants/bulk/$', bulk_load.BulkLoadApplicants.as_view()),
+    url(r'^(?P<program>[^/]+)/applicants/random-unscored/$', program.RandomUnscoredApplicant.as_view()),
     url(r'^(?P<program>[^/]+)/applicants/(?P<applicant_id>[^/]+)/$', program.ProgramApplicantView.as_view()),
+    url(r'^(?P<program>[^/]+)/applicants/(?P<applicant_id>[^/]+)/allocations/$', program.ApplicantAllocations.as_view()),
     url(r'^(?P<program>[^/]+)/resources/$', program.ProgramResources.as_view()),
     url(r'^(?P<program>[^/]+)/resources/(?P<resource_id>[^/]+)/$', program.ProgramResourceEdit.as_view()),
 

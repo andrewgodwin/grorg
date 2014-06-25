@@ -7,7 +7,30 @@
 {% block content %}
 <div class="section">
     <div class="main-column">
-        Stuff goes here.
+        <h3>Applicants</h3>
+        <p>
+            <b>{{ num_applicants }}</b> application{{ num_applicants|pluralize }} received,
+            of which you have scored <b>{{ num_scored }}</b>.
+        </p>
+        <p>
+            <a href="{{ program.urls.applicants }}" class="button boring">View applicants</a>
+            {% if num_scored < num_applicants %}
+                <a href="{{ program.urls.score_random }}" class="button">Score random applicant</a>
+            {% endif %}
+        </p>
+
+        <h3>Resources</h3>
+        <p>
+        {% for resource in program.resources.all %}
+            <i class="fa fa-{{ resource.fa_icon }}"></i> <b>{{ resource }}</b>:
+            {{ resource.amount_allocated }} allocated, {{ resource.amount_remaining }} remaining <br>
+        {% empty %}
+            <span class="empty">No resources defined.</span>
+        {% endfor %}
+        </p>
+        <p>
+            <a href="{{ program.urls.resources }}" class="button boring">View resources</a>
+        </p>
     </div>
 </div>
 {% endblock %}

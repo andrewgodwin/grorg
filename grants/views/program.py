@@ -2,9 +2,9 @@ import collections
 from django import forms
 from django.utils import timezone
 from django.shortcuts import render, redirect
-from django.views.generic import TemplateView, ListView, FormView, UpdateView
+from django.views.generic import View, TemplateView, ListView, FormView, UpdateView
 from ..models import Program, Question, Answer, Applicant, Score, Resource
-from ..forms import QuestionForm, BaseApplyForm, ScoreForm, ResourceForm
+from ..forms import QuestionForm, BaseApplyForm, ScoreForm, ResourceForm, AllocationForm
 
 
 def index(request):
@@ -38,6 +38,12 @@ class ProgramHome(ProgramMixin, TemplateView):
     """
 
     template_name = "program-home.html"
+
+    def get_context_data(self):
+        return {
+            "num_applicants": self.program.applicants.count(),
+            "num_scored": self.request.user.scores.filter(applicant__program=self.program).count(),
+        }
 
 
 class ProgramQuestions(ProgramMixin, FormView):
@@ -153,7 +159,7 @@ class ProgramApplicantView(ProgramMixin, TemplateView):
     Shows an individual application.
     """
 
-    template_name = "program-applicant-view.html"
+    template_name = "applicant-view.html"
 
     def get(self, request, applicant_id):
         applicant = self.program.applicants.get(pk=applicant_id)
@@ -174,13 +180,16 @@ class ProgramApplicantView(ProgramMixin, TemplateView):
                 new_score = form.save(commit=False)
                 new_score.applicant = applicant
                 new_score.user = self.request.user
-                if old_score:
+                if old_score and new_score.score != old_score:
                     new_score.score_history = ",".join(
                         [x.strip() for x in (new_score.score_history or "").split(",") if x.strip()]
                         + ["%.1f" % old_score]
                     )
                 new_score.save()
-                return redirect(".")
+                if "random_after" in request.POST:
+                    return redirect(self.program.urls.score_random)
+                else:
+                    return redirect(".")
         else:
             form = ScoreForm(instance=score)
         return self.render_to_response({
@@ -191,6 +200,58 @@ class ProgramApplicantView(ProgramMixin, TemplateView):
         })
 
     post = get
+
+
+class RandomUnscoredApplicant(ProgramMixin, View):
+    """
+    Redirects to a random applicant that the user hasn't scored yet,
+    or to the main list if they've scored everyone.
+    """
+
+    def get(self, request):
+        applicant = self.program.applicants.exclude(scores__user=self.request.user).order_by("?").first()
+        if applicant:
+            return redirect(applicant.urls.view)
+        else:
+            return redirect(self.program.urls.applicants)
+
+
+class ApplicantAllocations(ProgramMixin, FormView):
+    """
+    Allows editing of resources allocated to an applicant
+    """
+
+    form_class = AllocationForm
+    template_name = "applicant-allocations.html"
+
+    def dispatch(self, *args, **kwargs):
+        self.applicant = Applicant.objects.get(pk=kwargs.pop("applicant_id"))
+        return super(ApplicantAllocations, self).dispatch(*args, **kwargs)
+
+    def get_form_kwargs(self):
+        kwargs = super(ApplicantAllocations, self).get_form_kwargs()
+        kwargs['applicant'] = self.applicant
+        return kwargs
+
+    def get_context_data(self, **kwargs):
+        context = super(ApplicantAllocations, self).get_context_data(**kwargs)
+        context['applicant'] = self.applicant
+        context['allocations'] = self.applicant.allocations.order_by("resource__name")
+        return context
+
+    def form_valid(self, form):
+        question = form.save(commit=False)
+        question.applicant = self.applicant
+        question.save()
+        return redirect(".")
+
+    def post(self, request, *args, **kwargs):
+        # Possible deletion?
+        if "delete" in request.POST:
+            self.applicant.allocations.filter(pk=request.POST["delete_id"]).delete()
+            return redirect(self.applicant.urls.allocations)
+        return super(ApplicantAllocations, self).post(request, *args, **kwargs)
+
 
 
 class ProgramResources(ProgramMixin, FormView):

@@ -23,7 +23,7 @@
 			<li class="home"><a href="/">Grorg</a></li>
 			{% if user %}
 				<li class="right"><a href="/">Log Out</a></li>
-				<li class="right"><a href="#">{{ user }}</a></li>
+				<li class="right"><a href="#"><i class="fa fa-user"></i> &nbsp;{{ user }}</a></li>
 			{% else %}
 				<li class="right"><a href="/">Log In</a></li>
 			{% endif %}
@@ -42,7 +42,7 @@
 		{% if program %}
 		<div class="section program-header">
     		<div class="left-column">
-				<h1>{{ program }}</h1>
+				<h1><a href="{{ program.urls.view }}">{{ program }}</a></h1>
 			</div>
     		<div class="right-column">
 				<ul class="subnav">

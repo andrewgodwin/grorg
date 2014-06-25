@@ -12,5 +12,8 @@
         {% if include_delete %}
             <input class="button serious" type="submit" name="delete" value="{{ delete_verb|default:"Delete" }}">
         {% endif %}
+        {% if include_random %}
+            <input class="button boring" type="submit" name="random_after" value="{{ random_verb|default:"Save & Next" }}">
+        {% endif %}
     </div>
 </form>

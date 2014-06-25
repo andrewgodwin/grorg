@@ -81,6 +81,9 @@ h1 {
     h1:first-child {
         margin-top: 0px;
     }
+    h1 a {
+        color: inherit;
+    }
 
 h2 {
     font-size: 200%;
@@ -391,7 +394,7 @@ table.nice {
         text-decoration: none;
         font-weight: normal;
         color: #eee;
-        margin: 0 1.2em 0 0;
+        margin: 0 0.4em 0 0;
         padding: 5px 0.6em;
     }
 

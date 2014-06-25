@@ -1,5 +1,5 @@
 from django import forms
-from .models import Question, Score, Resource
+from .models import Question, Score, Resource, Allocation
 
 
 class QuestionForm(forms.ModelForm):
@@ -56,3 +56,19 @@ class ResourceForm(forms.ModelForm):
         fields = ["name", "type", "amount"]
         model = Resource
 
+
+class AllocationForm(forms.ModelForm):
+
+    class Meta:
+        fields = ["resource", "amount"]
+        model = Allocation
+
+    def __init__(self, applicant, *args, **kwargs):
+        self.applicant = applicant
+        super(AllocationForm, self).__init__(*args, **kwargs)
+
+    def clean_resource(self):
+        resource = self.cleaned_data["resource"]
+        if self.applicant.allocations.filter(resource=resource).exists():
+            raise forms.ValidationError("That resource is already allocated. Delete it if you wish to change it.")
+        return resource

@@ -32,6 +32,7 @@ class Program(models.Model):
         admin = "{view}admin/"
         apply = "{view}apply/"
         apply_success = "{view}apply/success/"
+        score_random = "{view}applicants/random-unscored/"
 
 
 class Resource(models.Model):
@@ -54,6 +55,23 @@ class Resource(models.Model):
 
     class urls(Urls):
         edit = "{self.program.urls.resources}{self.id}/"
+
+    def __unicode__(self):
+        return self.name
+
+    def fa_icon(self):
+        return {
+            "money": "money",
+            "ticket": "ticket",
+            "place": "user",
+            "accomodation": "building-o",
+        }.get(self.type, self.type)
+
+    def amount_allocated(self):
+        return sum(a.amount for a in self.allocations.all())
+
+    def amount_remaining(self):
+        return self.amount - self.amount_allocated()
 
 
 class Question(models.Model):
@@ -99,6 +117,7 @@ class Applicant(models.Model):
 
     class urls(Urls):
         view = "{self.program.urls.applicants}{self.id}/"
+        allocations = "{view}allocations/"
 
     def __unicode__(self):
         return self.name
@@ -109,6 +128,21 @@ class Applicant(models.Model):
             return None
         else:
             return sum(scores) / float(len(scores))
+
+
+class Allocation(models.Model):
+    """
+    An allocation of some Resources to an Applicant.
+    """
+
+    applicant = models.ForeignKey(Applicant, related_name="allocations")
+    resource = models.ForeignKey(Resource, related_name="allocations")
+    amount = models.PositiveIntegerField()
+
+    class Meta:
+        unique_together = [
+            ("applicant", "resource"),
+        ]
 
 
 class Answer(models.Model):

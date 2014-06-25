@@ -12,8 +12,8 @@
                 <th>Name</th>
                 <th>Applied</th>
                 <th>Score</th>
-                <th>Resources</th>
-                <th>Actions</th>
+                <th>Allocated</th>
+                <th></th>
             </tr>
             {% for applicant in applicants %}
             <tr>
@@ -21,9 +21,16 @@
                 <td class="small">{{ applicant.applied|date:"j M Y P" }}</td>
                 {% if applicant.has_scored %}
                     <td>{{ applicant.average_score|floatformat:"1"|default:"-" }}</td>
-                    <td class="empty">(none)</td>
+                    <td class="{% if not applicant.allocations.exists %}empty{% endif %}">
+                        {% for allocation in applicant.allocations.all %}
+                            <i class="fa fa-{{ allocation.resource.fa_icon }}"></i> {{ allocation.amount }}&nbsp;
+                        {% empty %}
+                            (none)
+                        {% endfor %}
+                    </td>
                     <td>
                         <a href="{{ applicant.urls.view }}" class="button boring">View</a>
+                        <a href="{{ applicant.urls.allocations }}" class="button boring">Allocate</a>
                     </td>
                 {% else %}
                     <td class="empty">(hidden)</td>
@@ -32,6 +39,10 @@
                         <a href="{{ applicant.urls.view }}" class="button">Score</a>
                     </td>
                 {% endif %}
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="3" class="empty">No applicants.</td>
             </tr>
             {% endfor %}
         </table>
