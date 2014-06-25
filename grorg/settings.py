@@ -1,5 +1,5 @@
 """
-Django settings for grantomatic project.
+Django settings for grorg project.
 
 For more information on this file, see
 https://docs.djangoproject.com/en/dev/topics/settings/
@@ -49,9 +49,9 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
 
-ROOT_URLCONF = 'grantomatic.urls'
+ROOT_URLCONF = 'grorg.urls'
 
-WSGI_APPLICATION = 'grantomatic.wsgi.application'
+WSGI_APPLICATION = 'grorg.wsgi.application'
 
 AUTH_USER_MODEL = 'users.User'
 
