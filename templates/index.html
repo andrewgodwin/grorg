@@ -5,13 +5,21 @@
 {% block content %}
 <div class="section">
     <div class="main-column">
-        {% for program in programs %}
-            <p>
-                <a href="{{ program.urls.view }}">{{ program.name }}</a>
-            </p>
-        {% empty %}
-            <p class="empty">No programs are available at this time.</p>
-        {% endfor %}
+        <h2>Welcome to Grorg.</h2>
+        <p>
+            This is the semi-experimental system to help manage grant applications.
+            Please report problems to andrew@aeracode.org.
+        </p>
+        {% if user.is_authenticated %}
+            <h3>Programs</h3>
+            {% for program in accessible_programs %}
+                <p>
+                    <a href="{{ program.urls.view }}">{{ program.name }}</a>
+                </p>
+            {% empty %}
+                <p class="empty">No programs are available to you at this time.</p>
+            {% endfor %}
+        {% endif %}
     </div>
 </div>
 {% endblock %}

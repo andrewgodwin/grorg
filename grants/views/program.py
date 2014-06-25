@@ -1,6 +1,7 @@
 import collections
 from django import forms
 from django.utils import timezone
+from django.http import Http404
 from django.shortcuts import render, redirect
 from django.views.generic import View, TemplateView, ListView, FormView, UpdateView
 from ..models import Program, Question, Answer, Applicant, Score, Resource
@@ -9,7 +10,7 @@ from ..forms import QuestionForm, BaseApplyForm, ScoreForm, ResourceForm, Alloca
 
 def index(request):
     return render(request, "index.html", {
-        "programs": Program.objects.order_by("name"),
+        "accessible_programs": Program.objects.filter(users__pk=request.user.pk).order_by("name"),
     })
 
 
@@ -25,10 +26,13 @@ class ProgramMixin(object):
         self.program = Program.objects.get(slug=self.program_slug)
         if self.login_required and not self.request.user:
             return redirect("login")
+        if self.login_required and not self.program.user_allowed(self.request.user):
+            raise Http404("Not logged in")
         return super(ProgramMixin, self).dispatch(*args, **kwargs)
 
     def render_to_response(self, context, **kwargs):
         context['program'] = self.program
+        context['user_allowed_program'] = self.program.user_allowed(self.request.user)
         return super(ProgramMixin, self).render_to_response(context, **kwargs)
 
 

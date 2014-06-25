@@ -4,6 +4,8 @@ from grants.views import program, bulk_load
 
 urlpatterns = [
     url(r'^$', 'grants.views.program.index'),
+    url(r'^login/$', 'users.views.login'),
+    url(r'^logout/$', 'users.views.logout'),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^(?P<program>[^/]+)/$', program.ProgramHome.as_view()),
     url(r'^(?P<program>[^/]+)/questions/$', program.ProgramQuestions.as_view()),
