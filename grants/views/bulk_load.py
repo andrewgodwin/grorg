@@ -3,15 +3,18 @@ import datetime
 import collections
 from django import forms
 from django.db.transaction import atomic
-from .program import ProgramView
+from django.views.generic import TemplateView
+from .program import ProgramMixin
 from ..forms import BulkLoadApplicantsForm
 from ..models import Applicant, Answer
 
 
-class BulkLoadApplicants(ProgramView):
+class BulkLoadApplicants(ProgramMixin, TemplateView):
     """
     Allows bulk importing of applications using CSV.
     """
+
+    template_name = "program-bulk-applicants.html"
 
     time_formats = [
         "%Y-%m-%dT%H:%M:%SZ",
@@ -19,10 +22,10 @@ class BulkLoadApplicants(ProgramView):
         "%d/%m/%Y %H:%M:%S",
     ]
 
-    def get(self, request):
-        return self.render("program-bulk-applicants.html", {
+    def get_context_data(self):
+        return {
             "form": BulkLoadApplicantsForm(),
-        })
+        }
 
     def post(self, request):
         # We always get a CSV file - parse it.
@@ -91,12 +94,12 @@ class BulkLoadApplicants(ProgramView):
                         successful += 1
                 except Exception as e:
                     errors.append((i, row, e))
-            return self.render("program-bulk-applicants-result.html", {
+            return self.render_to_response({
                 "successful": successful,
                 "errors": errors,
             })
         else:
             # Show mapping form
-            return self.render("program-bulk-applicants.html", {
+            return self.render_to_response({
                 "form": form,
             })

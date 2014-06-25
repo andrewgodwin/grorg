@@ -1,5 +1,5 @@
 from django import forms
-from .models import Question
+from .models import Question, Score, Resource
 
 
 class QuestionForm(forms.ModelForm):
@@ -41,3 +41,18 @@ class BulkLoadApplicantsForm(forms.Form):
             for name2, value2 in self.cleaned_data.items():
                 if name != name2 and value and value == value2:
                     raise forms.ValidationError("You cannot choose the same source for more than one question.")
+
+
+class ScoreForm(forms.ModelForm):
+
+    class Meta:
+        fields = ["score", "comment"]
+        model = Score
+
+
+class ResourceForm(forms.ModelForm):
+
+    class Meta:
+        fields = ["name", "type", "amount"]
+        model = Resource
+

@@ -21,7 +21,12 @@
 	<div class="header" style="{% block header_style %}{% endblock %}">
 		<ul class="primary-nav">
 			<li class="home"><a href="/">Grorg</a></li>
-			<li class="right"><a href="/">Log In</a></li>
+			{% if user %}
+				<li class="right"><a href="/">Log Out</a></li>
+				<li class="right"><a href="#">{{ user }}</a></li>
+			{% else %}
+				<li class="right"><a href="/">Log In</a></li>
+			{% endif %}
 		</ul>
 	</div>
 
@@ -43,6 +48,7 @@
 				<ul class="subnav">
 					<li><a href="{{ program.urls.questions }}">Questions</a></li>
 					<li><a href="{{ program.urls.applicants }}">Applicants</a></li>
+					<li><a href="{{ program.urls.resources }}">Resources</a></li>
 					<li><a href="{{ program.urls.users }}">Users</a></li>
 					<li><a href="{{ program.urls.admin }}">Admin</a></li>
 				</ul>

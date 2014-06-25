@@ -10,23 +10,36 @@
         <table class="nice">
             <tr>
                 <th>Name</th>
-                <th>Email</th>
                 <th>Applied</th>
+                <th>Score</th>
+                <th>Resources</th>
                 <th>Actions</th>
             </tr>
             {% for applicant in applicants %}
             <tr>
                 <td>{{ applicant.name }}</td>
-                <td>{{ applicant.email }}</td>
-                <td>{{ applicant.applied|date:"j M Y P" }}</td>
-                <td>
-                    <a href="{{ applicant.urls.view }}">View</a>
-                </td>
+                <td class="small">{{ applicant.applied|date:"j M Y P" }}</td>
+                {% if applicant.has_scored %}
+                    <td>{{ applicant.average_score|floatformat:"1"|default:"-" }}</td>
+                    <td class="empty">(none)</td>
+                    <td>
+                        <a href="{{ applicant.urls.view }}" class="button boring">View</a>
+                    </td>
+                {% else %}
+                    <td class="empty">(hidden)</td>
+                    <td class="empty">(hidden)</td>
+                    <td>
+                        <a href="{{ applicant.urls.view }}" class="button">Score</a>
+                    </td>
+                {% endif %}
             </tr>
             {% endfor %}
         </table>
 
-        <a href="{{ program.urls.applicants_bulk }}">Bulk load</a>
+        <div class="action-bar">
+            <a href="{{ program.urls.applicants_bulk }}" class="button boring">Bulk load applicants</a>
+            <a href="{{ program.urls.scores_bulk }}" class="button boring">Bulk load your scores</a>
+        </div>
     </div>
 </div>
 {% endblock %}

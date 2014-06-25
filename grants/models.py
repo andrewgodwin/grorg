@@ -26,6 +26,8 @@ class Program(models.Model):
         questions = "{view}questions/"
         applicants = "{view}applicants/"
         applicants_bulk = "{view}applicants/bulk/"
+        scores_bulk = "{view}applicants/bulk_scores/"
+        resources = "{view}resources/"
         users = "{view}users/"
         admin = "{view}admin/"
         apply = "{view}apply/"
@@ -48,16 +50,10 @@ class Resource(models.Model):
     program = models.ForeignKey(Program, related_name="resources")
     name = models.CharField(max_length=100)
     type = models.CharField(max_length=50, choices=TYPE_CHOICES)
+    amount = models.PositiveIntegerField()
 
-
-class ResourceDonation(models.Model):
-    """
-    An available amount of a resource given by someone/some organisation.
-    """
-
-    resource = models.ForeignKey(Resource, related_name="donations")
-    amount = models.IntegerField()
-    source = models.TextField(blank=True, null=True)
+    class urls(Urls):
+        edit = "{self.program.urls.resources}{self.id}/"
 
 
 class Question(models.Model):
@@ -107,6 +103,13 @@ class Applicant(models.Model):
     def __unicode__(self):
         return self.name
 
+    def average_score(self):
+        scores = [s.score for s in self.scores.all() if s.score]
+        if not scores:
+            return None
+        else:
+            return sum(scores) / float(len(scores))
+
 
 class Answer(models.Model):
     """
@@ -116,3 +119,28 @@ class Answer(models.Model):
     applicant = models.ForeignKey(Applicant, related_name="answers")
     question = models.ForeignKey(Question, related_name="answers")
     answer = models.TextField()
+
+    class Meta:
+        unique_together = [
+            ("applicant", "question"),
+        ]
+
+
+class Score(models.Model):
+    """
+    A score and optional comment on an applicant by a user.
+    """
+
+    applicant = models.ForeignKey(Applicant, related_name="scores")
+    user = models.ForeignKey("users.User", related_name="scores")
+    score = models.FloatField(blank=True, null=True, help_text="From 0 (terrible) to 5 (excellent)")
+    comment = models.TextField(blank=True, null=True, help_text="Seen only by other voters, not by the applicant")
+    score_history = models.TextField(blank=True, null=True)
+
+    class Meta:
+        unique_together = [
+            ("applicant", "user"),
+        ]
+
+    def score_history_human(self):
+        return (self.score_history or "").replace(",", ", ")

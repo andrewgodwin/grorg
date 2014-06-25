@@ -7,6 +7,12 @@
     <div class="main-column">
         <h1>{{ applicant.name }}</h1>
 
+        <h4>Email address</h4>
+        <p>{{ applicant.email }}</p>
+
+        <h4>Application time</h4>
+        <p>{{ applicant.applied|date:"j M Y P" }}</p>
+
         {% for question in questions %}
             <h4>{{ question.question }}</h4>
             {% if question.answer %}
@@ -19,6 +25,38 @@
                 </p>
             {% endif %}
         {% endfor %}
+
+        <h3>Scores</h3>
+        {% if not all_scores %}
+            <p class="empty">
+                You must score this applicant before you can see other scores.
+            </p>
+        {% else %}
+            <table class="nice">
+                <tr>
+                    <th>User</th>
+                    <th>Score</th>
+                    <th>Comment</th>
+                </tr>
+                {% for ascore in all_scores %}
+                    <tr>
+                        <td>{{ ascore.user }}</td>
+                        <td>{{ ascore.score|floatformat:"1" }}</td>
+                        <td>
+                            {{ ascore.comment }}
+                            {% if ascore.score_history %}
+                                <p class="score_history">Score history: {{ ascore.score_history_human }}</p>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
+        {% endif %}
+
+        <h3>Submit score</h3>
+        <form action="." method="POST">
+            {% include "_form.html" with submit_verb="Save" %}
+        </form>
     </div>
 </div>
 {% endblock %}

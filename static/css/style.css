@@ -93,7 +93,7 @@ h3 {
     font-size: 24px;
     font-family: alte_din;
     color: #0e232e;
-    margin: 20px 0 12px 0;
+    margin: 30px 0 12px 0;
 }
 
 h4 {
@@ -207,6 +207,21 @@ a {
     color: #A63030;
 }
 
+.action-bar {
+    margin: 20px 0;
+    padding: 11px 5px 13px 5px;
+    border: 1px solid #ddd;
+    border-radius: 2px;
+    background: #f6f6f6;
+}
+
+.score_history {
+    color: #666;
+    font-size: 90%;
+    font-style: italic;
+    margin: 5px 0 0 0;
+}
+
 /* Program header */
 
 .program-header h1 {
@@ -250,12 +265,19 @@ a {
     a.button {
         padding-bottom: 7px;
     }
+    .button:hover {
+        text-decoration: none;
+        opacity: 0.9;
+    }
     .button:active {
         top: 1px;
         border-bottom: 1px solid rgba(0, 0, 0, 0);
     }
     .button.prominent {
         background-color: #09a3f2;
+    }
+    .button.boring {
+        background-color: #818E90;
     }
     .button.create {
         background-color: #2C954C;
@@ -354,13 +376,23 @@ table.nice {
         vertical-align: middle;
     }
     table.nice td {
-        padding: 5px 20px 5px 0px;
+        padding: 8px 20px 8px 0px;
         vertical-align: middle;
+    }
+    table.nice td.small {
+        font-size: 90%;
     }
     table.nice a {
         text-decoration: none;
         font-weight: bold;
         color: inherit;
+    }
+    table.nice a.button {
+        text-decoration: none;
+        font-weight: normal;
+        color: #eee;
+        margin: 0 1.2em 0 0;
+        padding: 5px 0.6em;
     }
 
 
