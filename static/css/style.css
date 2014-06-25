@@ -122,11 +122,13 @@ a {
         text-decoration: underline;
     }
 
-.body-text ul {
+.body-text ul,
+ul.real {
     list-style-type: disc;
     margin: 1.5em 0;
 }
-    .body-text li {
+    .body-text li,
+    ul.real li {
         margin: 1em 0 1em 2em;
     }
 
@@ -249,6 +251,9 @@ a {
             float: left;
             padding: 5px 5px;
             margin: 0 5px;
+        }
+        .subnav li.admin a {
+            color: #833;
         }
 
 /* Buttons */

@@ -18,6 +18,8 @@ class Program(models.Model):
 
     completed = models.BooleanField(default=False)
 
+    users = models.ManyToManyField("users.User", blank=True)
+
     def __unicode__(self):
         return self.name
 
@@ -33,6 +35,9 @@ class Program(models.Model):
         apply = "{view}apply/"
         apply_success = "{view}apply/success/"
         score_random = "{view}applicants/random-unscored/"
+
+    def user_allowed(self, user):
+        return self.users.filter(pk=user.pk).exists()
 
 
 class Resource(models.Model):
@@ -178,3 +183,12 @@ class Score(models.Model):
 
     def score_history_human(self):
         return (self.score_history or "").replace(",", ", ")
+
+
+class UploadedCSV(models.Model):
+    """
+    A place to store uploaded CSV files while they're being mapped.
+    """
+
+    csv = models.BinaryField()
+    uploaded = models.DateTimeField(auto_now_add=True)

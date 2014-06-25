@@ -31,16 +31,29 @@ class BaseApplyForm(forms.Form):
         return email
 
 
-class BulkLoadApplicantsForm(forms.Form):
+class BulkLoadUploadForm(forms.Form):
 
-    csv = forms.CharField(required=True, widget=forms.Textarea)
+    csv = forms.FileField(required=True)
+
+
+class BulkLoadMapBaseForm(forms.Form):
+
+    csv_id = forms.CharField(required=True, widget=forms.HiddenInput)
 
     def clean(self):
         # Ensure that no two mappings share the same column
         for name, value in self.cleaned_data.items():
             for name2, value2 in self.cleaned_data.items():
+                if name == "csv_id" or name2 == "csv_id":
+                    continue
                 if name != name2 and value and value == value2:
-                    raise forms.ValidationError("You cannot choose the same source for more than one question.")
+                    raise forms.ValidationError(
+                        "You cannot choose the same source (%s) for more than one question (%s and %s)." % (
+                            value,
+                            name,
+                            name2,
+                        )
+                    )
 
 
 class ScoreForm(forms.ModelForm):

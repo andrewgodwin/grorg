@@ -31,6 +31,16 @@
         <p>
             <a href="{{ program.urls.resources }}" class="button boring">View resources</a>
         </p>
+
+        <h3>Users</h3>
+        <p>The following users are assigned to this program:</p>
+        <ul class="real">
+            {% for user in program.users.all %}
+                <li>{{ user }}</li>
+            {% empty %}
+                <li class="empty">No users assigned</li>
+            {% endfor %}
+        </ul>
     </div>
 </div>
 {% endblock %}
