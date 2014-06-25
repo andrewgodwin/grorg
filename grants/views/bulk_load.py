@@ -78,7 +78,7 @@ class BulkLoadApplicants(BulkLoader, TemplateView):
     time_formats = [
         "%Y-%m-%dT%H:%M:%SZ",
         "%Y-%m-%dT%H:%M:%S",
-        "%d/%m/%Y %H:%M:%S",
+        "%m/%d/%Y %H:%M:%S",
     ]
 
     def get_targets(self):
