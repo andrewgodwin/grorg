@@ -417,76 +417,26 @@ table.nice {
 
 @media (max-width: 1150px) {
 
-.header,
-.section {
-    width: 750px;
-}
-
-.primary-nav .home {
-    display: none;
-}
-
-.section-page .article-main {
-    width: 740px;
-    font-size: 90%;
-}
-    .section-page .article-main img {
-        left: -175px;
-    }
-    .section-page .article-main h2 {
-        font-size: 230%;
-    }
-    .section-page .article-main .pre-title,
-    .section-page .article-main h2,
-    .section-page .article-main p,
-    .section-page .article-main .meta {
-        margin-left: 390px;
+    .section {
+        width: 750px;
     }
 
-.section-page .article-secondary {
-    width: 350px;
-    font-size: 90%;
-}
-    .section-page .article-secondary h2 {
-        font-size: 190%;
+    .primary-nav {
+        width: 750px;
     }
 
-.section-page .article-tertiary {
-    width: 230px;
-}
-    .section-page .article-tertiary {
-        margin-right: 30px;
+    .main-column {
+        width: 750px;
     }
-    .section-page .article-tertiary:nth-child(4n) {
-        margin-right: 30px;
-    }
-    .section-page .article-tertiary:nth-child(4n+1) {
-        clear: none;
-    }
-    .section-page .article-tertiary:nth-child(3n) {
-        margin-right: 0;
-    }
-    .section-page .article-tertiary:nth-child(3n+1) {
+
+    .secondary-column {
         clear: left;
     }
 
-.header-image {
-    width: 750px;
-    border-top: 4px solid #0084c8;
-}
+    h1 {
+        clear: both;
+    }
 
-.body-text .image-left,
-.body-text .image-right {
-    width: 250px;
-    font-size: 90%;
-}
-
-.main-column {
-    width: 750px;
-}
-
-.secondary-column {
-    clear: left;
 }
 
 
@@ -502,95 +452,11 @@ table.nice {
         width: 100%;
     }
 
-    .header,
+    .primary-nav,
     .section {
         width: 90%;
         margin-left: 5%;
         margin-right: 5%;
-    }
-
-    .header,
-    .has-edit-bar .header,
-    .article-page .header {
-        margin-top: 10px;
-    }
-
-    .header .logo {
-        float: none;
-        width: 145px;
-        margin: 0px auto 5px auto;
-    }
-        .header .logo img {
-            width: 145px;
-        }
-
-    .primary-nav {
-        float: none;
-        padding: 4px 0;
-        margin: 0 0 8px 0;
-        line-height: 25px;
-        text-align: center;
-    }
-        .primary-nav li {
-            float: none;
-            display: inline;
-            white-space: nowrap;
-        }
-            .primary-nav li a {
-                float: none;
-                display: inline;
-                border-bottom: 0;
-                white-space: nowrap;
-            }
-            .primary-nav li a:hover,
-            .primary-nav li.selected a {
-                border-bottom: 0;
-            }
-
-    .header-image {
-        margin-top: 10px;
-    }
-
-    .edit-bar {
-        display: none;
-    }
-
-    .not-mobile {
-        display: none !important;
-    }
-
-    .top-article {
-        margin-top: 10px;
-    }
-
-    .section-page .article-main {
-        width: 100%;
-        border-left: 0;
-        border-top: 5px solid #0084c8;
-        float: none;
-        margin: 0 0 20px 0;
-    }
-        .section-page .article-main img {
-            position: inherit;
-            left: 0;
-            float: none;
-            width: 100%;
-        }
-        .section-page .article-main .pre-title,
-        .section-page .article-main h2,
-        .section-page .article-main p,
-        .section-page .article-main .meta {
-            margin-left: 10px;
-        }
-
-    .section-page .article-secondary {
-        width: 100%;
-        font-size: 90%;
-        border-top: 5px solid #0084c8;
-    }
-
-    .section-page .article-tertiary {
-        width: 100%;
     }
 
     h1 {
@@ -598,60 +464,8 @@ table.nice {
         margin: 10px 0 20px 0;
     }
 
-    h1 .header-secondary {
-        float: none;
-        width: auto;
-        text-align: left;
-        font-size: 70%;
-        margin-left: 0;
-    }
-
     h2 {
         font-size: 150%;
     }
 
-    .article-page h1 {
-        font-size: 35px;
-        margin-bottom: 15px;
-    }
-
-    .article-page .header-secondary .score-stars {
-        font-size: 80%;
-        left: 0;
-    }
-
-    .body-text .image-left,
-    .body-text .image-right {
-        width: 300px;
-        float: none;
-        font-size: 90%;
-        margin-left: auto;
-        margin-right: auto;
-    }
-
-    .read-more a {
-        display: block;
-    }
-
-    table.articles td {
-        display: block;
-    }
-        table.articles td.article-image {
-            float: left;
-        }
-        table.articles td.article-title-and-lead {
-            margin-left: 45px;
-            padding-bottom: 5px;
-        }
-        table.articles td.published {
-            font-size: 90%;
-            padding-bottom: 35px;
-        }
-            table.articles td.published .date,
-            table.articles td.published .author {
-                display: inline;
-            }
-            table.articles td.published .author {
-                margin-left: 0.6em;
-            }
 }
