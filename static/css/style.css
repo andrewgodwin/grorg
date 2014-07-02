@@ -227,6 +227,11 @@ ul.real {
     margin: 5px 0 0 0;
 }
 
+.num_votes {
+    font-size: 80%;
+    color: #444;
+}
+
 /* Program header */
 
 .program-header h1 {

@@ -20,7 +20,10 @@
                 <td>{{ applicant.name }}</td>
                 <td class="small">{{ applicant.applied|date:"j M Y P" }}</td>
                 {% if applicant.has_scored %}
-                    <td>{{ applicant.average_score|floatformat:"1"|default:"-" }}</td>
+                    <td>
+                        {{ applicant.average_score|floatformat:"1"|default:"-" }}
+                        <span class="num_votes">({{ applicant.scores.count }} vote{{ applicant.scores.count|pluralize }})</span>
+                    </td>
                     <td class="{% if not applicant.allocations.exists %}empty{% endif %}">
                         {% for allocation in applicant.allocations.all %}
                             <i class="fa fa-{{ allocation.resource.fa_icon }}"></i> {{ allocation.amount }}&nbsp;
