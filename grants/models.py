@@ -100,6 +100,9 @@ class Question(models.Model):
     class urls(Urls):
         edit = "{self.program.urls.questions}{self.id}/"
 
+    def __unicode__(self):
+        return self.question
+
     def can_delete(self):
         return not self.answers.exists()
 

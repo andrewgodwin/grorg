@@ -1,5 +1,9 @@
 from django.contrib import admin
-from .models import Program, Applicant, Score
+from .models import Program, Applicant, Score, Answer
+
+class AnswerInline(admin.StackedInline):
+    model = Answer
+    extra = 1
 
 admin.site.register(
     Program,
@@ -12,6 +16,7 @@ admin.site.register(
     Applicant,
     list_display = ["id", "name", "email", "program", "applied"],
     list_display_links = ["id", "name"],
+    inlines = [AnswerInline],
 )
 
 admin.site.register(
