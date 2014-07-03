@@ -152,10 +152,24 @@ class ProgramApplicants(ProgramMixin, ListView):
     context_object_name = "applicants"
 
     def get_queryset(self):
-        applicants = list(self.program.applicants.order_by("-applied"))
+        # Work out sort
+        if self.request.GET.get("sort", "score"):
+            self.sort = "score"
+        else:
+            self.sort = "applied"
+        # Fetch applicants
+        applicants = list(self.program.applicants.prefetch_related("scores").order_by("-applied"))
         for applicant in applicants:
             applicant.has_scored = applicant.scores.filter(user=self.request.user).exists()
+            applicant.average_score = applicant.average_score()
+        if self.sort == "score":
+            applicants.sort(key=lambda a: a.average_score, reverse=True)
         return applicants
+
+    def get_context_data(self):
+        context = super(ProgramApplicants, self).get_context_data()
+        context['sort'] = self.sort
+        return context
 
 
 class ProgramApplicantView(ProgramMixin, TemplateView):

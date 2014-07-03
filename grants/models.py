@@ -137,6 +137,20 @@ class Applicant(models.Model):
         else:
             return sum(scores) / float(len(scores))
 
+    def variance(self):
+        data = [s.score for s in self.scores.all() if s.score]
+        n = len(data)
+        c = sum(data) / float(len(data))
+        if n < 2:
+            return 0
+        ss = sum((x-c)**2 for x in data)
+        ss -= sum((x-c) for x in data)**2/len(data)
+        assert not ss < 0, 'negative sum of square deviations: %f' % ss
+        return ss / (n-1)
+
+    def stdev(self):
+        return self.variance() ** 0.5
+
 
 class Allocation(models.Model):
     """
@@ -175,7 +189,7 @@ class Score(models.Model):
 
     applicant = models.ForeignKey(Applicant, related_name="scores")
     user = models.ForeignKey("users.User", related_name="scores")
-    score = models.FloatField(blank=True, null=True, help_text="From 0 (terrible) to 5 (excellent)")
+    score = models.FloatField(blank=True, null=True, help_text="From 1 (terrible) to 5 (excellent)")
     comment = models.TextField(blank=True, null=True, help_text="Seen only by other voters, not by the applicant")
     score_history = models.TextField(blank=True, null=True)
 

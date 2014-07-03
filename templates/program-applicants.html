@@ -9,8 +9,8 @@
     <table class="nice">
         <tr>
             <th>Name</th>
-            <th>Applied</th>
-            <th>Score</th>
+            <th><a href="?sort=applied">Applied</a></th>
+            <th><a href="?sort=score">Score</a></th>
             <th>Allocated</th>
             <th></th>
         </tr>
@@ -21,7 +21,7 @@
             {% if applicant.has_scored %}
                 <td>
                     {{ applicant.average_score|floatformat:"1"|default:"-" }}
-                    <span class="num_votes">({{ applicant.scores.count }} vote{{ applicant.scores.count|pluralize }})</span>
+                    <span class="num_votes">({{ applicant.scores.count }} vote{{ applicant.scores.count|pluralize }}, &sigma;={{ applicant.stdev|floatformat:"1" }})</span>
                 </td>
                 <td class="{% if not applicant.allocations.exists %}empty{% endif %}">
                     {% for allocation in applicant.allocations.all %}
