@@ -153,7 +153,7 @@ class ProgramApplicants(ProgramMixin, ListView):
 
     def get_queryset(self):
         # Work out sort
-        if self.request.GET.get("sort", "score"):
+        if self.request.GET.get("sort", None) == "score":
             self.sort = "score"
         else:
             self.sort = "applied"

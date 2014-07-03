@@ -9,8 +9,8 @@
     <table class="nice">
         <tr>
             <th>Name</th>
-            <th><a href="?sort=applied">Applied</a></th>
-            <th><a href="?sort=score">Score</a></th>
+            <th><a href="?sort=applied">Applied {% if sort == "applied" %}<i class="fa fa-chevron-circle-down"></i>{% endif %}</a></th>
+            <th><a href="?sort=score">Score {% if sort == "score" %}<i class="fa fa-chevron-circle-down"></i>{% endif %}</a></th>
             <th>Allocated</th>
             <th></th>
         </tr>
