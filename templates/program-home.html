@@ -35,8 +35,8 @@
         <h3>Users</h3>
         <p>The following users are assigned to this program:</p>
         <ul class="real">
-            {% for user in program.users.all %}
-                <li>{{ user }}</li>
+            {% for user in users %}
+                <li>{{ user }} ({{ user.num_votes }} vote{{ user.num_votes|pluralize }})</li>
             {% empty %}
                 <li class="empty">No users assigned</li>
             {% endfor %}

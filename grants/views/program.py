@@ -44,9 +44,13 @@ class ProgramHome(ProgramMixin, TemplateView):
     template_name = "program-home.html"
 
     def get_context_data(self):
+        users = list(self.program.users.all())
+        for user in users:
+            user.num_votes = user.scores.filter(applicant__program=self.program).count()
         return {
             "num_applicants": self.program.applicants.count(),
             "num_scored": self.request.user.scores.filter(applicant__program=self.program).count(),
+            "users": users,
         }
 
 
