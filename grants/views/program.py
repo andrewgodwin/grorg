@@ -165,7 +165,10 @@ class ProgramApplicants(ProgramMixin, ListView):
         applicants = list(self.program.applicants.prefetch_related("scores").order_by("-applied"))
         for applicant in applicants:
             applicant.has_scored = applicant.scores.filter(user=self.request.user).exists()
-            applicant.average_score = applicant.average_score()
+            if applicant.has_scored:
+                applicant.average_score = applicant.average_score()
+            else:
+                applicant.average_score = -1 
         if self.sort == "score":
             applicants.sort(key=lambda a: a.average_score, reverse=True)
         return applicants
