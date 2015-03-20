@@ -140,6 +140,8 @@ class Applicant(models.Model):
     def variance(self):
         data = [s.score for s in self.scores.all() if s.score]
         n = len(data)
+        if n == 0:
+            return 0
         c = sum(data) / float(len(data))
         if n < 2:
             return 0
