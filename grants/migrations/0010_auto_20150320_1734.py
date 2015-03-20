@@ -1,0 +1,81 @@
+# -*- coding: utf-8 -*-
+from __future__ import unicode_literals
+
+from django.db import models, migrations
+from django.conf import settings
+
+
+class Migration(migrations.Migration):
+
+    dependencies = [
+        ('grants', '0009_uploadedcsv'),
+    ]
+
+    operations = [
+        migrations.AddField(
+            model_name='program',
+            name='join_code',
+            field=models.CharField(max_length=100, null=True, blank=True),
+            preserve_default=True,
+        ),
+        migrations.AlterField(
+            model_name='allocation',
+            name='applicant',
+            field=models.ForeignKey(related_name='allocations', to='grants.Applicant'),
+            preserve_default=True,
+        ),
+        migrations.AlterField(
+            model_name='allocation',
+            name='resource',
+            field=models.ForeignKey(related_name='allocations', to='grants.Resource'),
+            preserve_default=True,
+        ),
+        migrations.AlterField(
+            model_name='answer',
+            name='applicant',
+            field=models.ForeignKey(related_name='answers', to='grants.Applicant'),
+            preserve_default=True,
+        ),
+        migrations.AlterField(
+            model_name='answer',
+            name='question',
+            field=models.ForeignKey(related_name='answers', to='grants.Question'),
+            preserve_default=True,
+        ),
+        migrations.AlterField(
+            model_name='applicant',
+            name='program',
+            field=models.ForeignKey(related_name='applicants', to='grants.Program'),
+            preserve_default=True,
+        ),
+        migrations.AlterField(
+            model_name='question',
+            name='program',
+            field=models.ForeignKey(related_name='questions', to='grants.Program'),
+            preserve_default=True,
+        ),
+        migrations.AlterField(
+            model_name='resource',
+            name='program',
+            field=models.ForeignKey(related_name='resources', to='grants.Program'),
+            preserve_default=True,
+        ),
+        migrations.AlterField(
+            model_name='score',
+            name='applicant',
+            field=models.ForeignKey(related_name='scores', to='grants.Applicant'),
+            preserve_default=True,
+        ),
+        migrations.AlterField(
+            model_name='score',
+            name='score',
+            field=models.FloatField(help_text=b'From 1 (terrible) to 5 (excellent)', null=True, blank=True),
+            preserve_default=True,
+        ),
+        migrations.AlterField(
+            model_name='score',
+            name='user',
+            field=models.ForeignKey(related_name='scores', to=settings.AUTH_USER_MODEL),
+            preserve_default=True,
+        ),
+    ]

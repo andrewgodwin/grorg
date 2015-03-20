@@ -23,9 +23,11 @@
 			<li class="home"><a href="/">Grorg</a></li>
 			{% if user.is_authenticated %}
 				<li class="right"><a href="/logout/">Log Out</a></li>
+				<li class="right"><a href="/join/">Join Program</a></li>
 				<li class="right"><a href="#"><i class="fa fa-user"></i> &nbsp;{{ user }}</a></li>
 			{% else %}
 				<li class="right"><a href="/login/">Log In</a></li>
+				<li class="right"><a href="/register/">Register</a></li>
 			{% endif %}
 		</ul>
 	</div>

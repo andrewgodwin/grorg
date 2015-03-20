@@ -16,6 +16,8 @@ class Program(models.Model):
     grants_announced = models.DateTimeField(blank=True, null=True)
     program_starts = models.DateTimeField(blank=True, null=True)
 
+    join_code = models.CharField(max_length=100, blank=True, null=True)
+
     completed = models.BooleanField(default=False)
 
     users = models.ManyToManyField("users.User", blank=True)

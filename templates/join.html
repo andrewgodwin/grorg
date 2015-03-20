@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block whole_title %}Join{% endblock %}
+
+{% block content %}
+<div class="section">
+    <div class="main-column">
+        <h2>Join</h2>
+        <form action="." method="POST">
+            {% include "_form.html" with submit_verb="Join" %}
+        </form>
+    </div>
+</div>
+{% endblock %}
