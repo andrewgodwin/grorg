@@ -1,2 +1,1 @@
 Django>=1.7
-django-toolbelt>=0.0.1
