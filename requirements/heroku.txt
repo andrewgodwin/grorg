@@ -1,0 +1,5 @@
+# TODO: pin versions
+dj-database-url
+gunicorn
+whitenoise
+psycopg2
