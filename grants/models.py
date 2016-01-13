@@ -19,6 +19,7 @@ class Program(models.Model):
     join_code = models.CharField(max_length=100, blank=True, null=True)
 
     completed = models.BooleanField(default=False)
+    duplicate_emails = models.BooleanField(default=False)
 
     users = models.ManyToManyField("users.User", blank=True)
 

@@ -96,7 +96,10 @@ class BulkLoadApplicants(BulkLoader, TemplateView):
         return targets
 
     def process_row(self, row, target_map):
-        applicant = Applicant.objects.filter(program=self.program, email=row[target_map["email"]]).first()
+        if self.program.duplicate_emails:
+            applicant = None
+        else:
+            applicant = Applicant.objects.filter(program=self.program, email=row[target_map["email"]]).first()
         if not applicant:
             applicant = Applicant(
                 program = self.program,
