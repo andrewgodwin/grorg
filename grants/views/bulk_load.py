@@ -47,7 +47,7 @@ class BulkLoader(ProgramMixin):
             target_map = dict(
                 (name, int(value))
                 for name, value in form.cleaned_data.items()
-                if name != "csv_id" and value is not None
+                if name != "csv_id" and value
             )
             for i, row in enumerate(rows[1:]):
                 try:
