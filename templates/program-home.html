@@ -41,6 +41,11 @@
                 <li class="empty">No users assigned</li>
             {% endfor %}
         </ul>
+        <p>
+            Other users can sign up using the program code, which is
+            <tt>{{ program.join_code }}</tt>. Only give this code to people
+            you trust; anyone with it can sign up and see voting results.
+        </p>
     </div>
 </div>
 {% endblock %}
