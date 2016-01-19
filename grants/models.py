@@ -121,11 +121,6 @@ class Applicant(models.Model):
 
     applied = models.DateTimeField(blank=True, null=True)
 
-    class Meta:
-        unique_together = [
-            ("program", "email"),
-        ]
-
     class urls(Urls):
         view = "{self.program.urls.applicants}{self.id}/"
         allocations = "{view}allocations/"
