@@ -79,6 +79,7 @@ class AllocationForm(forms.ModelForm):
     def __init__(self, applicant, *args, **kwargs):
         self.applicant = applicant
         super(AllocationForm, self).__init__(*args, **kwargs)
+        self.fields["resource"].queryset = self.applicant.program.resources
 
     def clean_resource(self):
         resource = self.cleaned_data["resource"]
