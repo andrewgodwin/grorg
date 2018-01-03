@@ -5,10 +5,22 @@
 {% block content %}
 <div class="section">
     <div class="main-column">
-        <h1>{{ applicant.name }}</h1>
+        <h1>
+            {% if all_scores or program.show_names_before_scoring %}
+                {{ applicant.name }}
+            {% else %}
+                (name hidden until scored)
+            {% endif %}
+        </h1>
 
         <h4>Email address</h4>
-        <p>{{ applicant.email }}</p>
+        <p>
+            {% if all_scores or program.show_names_before_scoring %}
+                {{ applicant.email }}
+            {% else %}
+                (hidden until scored)
+            {% endif %}
+        </p>
 
         <h4>Application time</h4>
         <p>{{ applicant.applied|date:"j M Y P" }}</p>

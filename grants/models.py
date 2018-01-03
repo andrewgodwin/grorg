@@ -20,6 +20,8 @@ class Program(models.Model):
 
     completed = models.BooleanField(default=False)
     duplicate_emails = models.BooleanField(default=False)
+    show_names_before_scoring = models.BooleanField(default=True,
+                                                    help_text="Show applicant's name and email even before scoring.")
 
     users = models.ManyToManyField("users.User", blank=True)
 
