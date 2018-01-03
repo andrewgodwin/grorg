@@ -8,6 +8,7 @@
         <h3>Edit question</h3>
         <form action="." method="POST">
             {% include "_form.html" with include_delete=question.can_delete %}
+            {% include "_sortpriority_explanation.html" %}
         </form>
     </div>
 </div>

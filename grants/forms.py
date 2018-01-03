@@ -5,7 +5,7 @@ from .models import Question, Score, Resource, Allocation
 class QuestionForm(forms.ModelForm):
 
     class Meta:
-        fields = ["question", "type", "required"]
+        fields = ["question", "type", "required", "sort_priority"]
         model = Question
 
     def clean_type(self):
@@ -13,6 +13,16 @@ class QuestionForm(forms.ModelForm):
         if self.instance and type != self.instance.type and self.instance.answers.exists():
             raise forms.ValidationError("Cannot change once this question has answers")
         return type
+
+    def clean(self):
+        type = self.cleaned_data.get("type")
+        priority = self.cleaned_data.get("sort_priority")
+        if type == "boolean_sortpriority" and not priority:
+            error = "If you select the 'Yes/No with sort priority' type, you must provide a priority."
+            raise forms.ValidationError(error)
+        if type != "boolean_sortpriority" and priority:
+            raise forms.ValidationError("Sort priority can only be used with the 'Yes/No with sort priority' type.")
+        return self.cleaned_data
 
 
 class BaseApplyForm(forms.Form):

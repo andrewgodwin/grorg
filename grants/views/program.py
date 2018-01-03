@@ -166,15 +166,18 @@ class ProgramApplicants(ProgramMixin, ListView):
         for applicant in applicants:
             applicant.has_scored = applicant.scores.filter(user=self.request.user).exists()
             if applicant.has_scored:
-                applicant.average_score = applicant.average_score()
+                applicant.sort_priority = applicant.sort_priority()
             else:
-                applicant.average_score = -1 
+                applicant.sort_priority = -1
+            # Enrich with additional fields
+            applicant.extra_answers = applicant.answers.filter(question__type="boolean_sortpriority")
         if self.sort == "score":
-            applicants.sort(key=lambda a: a.average_score, reverse=True)
+            applicants.sort(key=lambda a: a.sort_priority, reverse=True)
         return applicants
 
     def get_context_data(self):
         context = super(ProgramApplicants, self).get_context_data()
+        context['extra_fields'] = self.program.questions.filter(type="boolean_sortpriority")
         context['sort'] = self.sort
         return context
 
