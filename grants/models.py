@@ -1,3 +1,4 @@
+from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
 from urlman import Urls
 
@@ -189,7 +190,8 @@ class Score(models.Model):
 
     applicant = models.ForeignKey(Applicant, related_name="scores")
     user = models.ForeignKey("users.User", related_name="scores")
-    score = models.FloatField(blank=True, null=True, help_text="From 1 (terrible) to 5 (excellent)")
+    score = models.FloatField(blank=True, null=True, help_text="From 1 (terrible) to 5 (excellent)",
+                              validators=[MinValueValidator(1), MaxValueValidator(5)])
     comment = models.TextField(blank=True, null=True, help_text="Seen only by other voters, not by the applicant")
     score_history = models.TextField(blank=True, null=True)
 
