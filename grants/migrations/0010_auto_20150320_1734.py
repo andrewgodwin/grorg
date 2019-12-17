@@ -21,49 +21,49 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='allocation',
             name='applicant',
-            field=models.ForeignKey(related_name='allocations', to='grants.Applicant'),
+            field=models.ForeignKey(related_name='allocations', to='grants.Applicant', on_delete=models.CASCADE),
             preserve_default=True,
         ),
         migrations.AlterField(
             model_name='allocation',
             name='resource',
-            field=models.ForeignKey(related_name='allocations', to='grants.Resource'),
+            field=models.ForeignKey(related_name='allocations', to='grants.Resource', on_delete=models.CASCADE),
             preserve_default=True,
         ),
         migrations.AlterField(
             model_name='answer',
             name='applicant',
-            field=models.ForeignKey(related_name='answers', to='grants.Applicant'),
+            field=models.ForeignKey(related_name='answers', to='grants.Applicant', on_delete=models.CASCADE),
             preserve_default=True,
         ),
         migrations.AlterField(
             model_name='answer',
             name='question',
-            field=models.ForeignKey(related_name='answers', to='grants.Question'),
+            field=models.ForeignKey(related_name='answers', to='grants.Question', on_delete=models.CASCADE),
             preserve_default=True,
         ),
         migrations.AlterField(
             model_name='applicant',
             name='program',
-            field=models.ForeignKey(related_name='applicants', to='grants.Program'),
+            field=models.ForeignKey(related_name='applicants', to='grants.Program', on_delete=models.CASCADE),
             preserve_default=True,
         ),
         migrations.AlterField(
             model_name='question',
             name='program',
-            field=models.ForeignKey(related_name='questions', to='grants.Program'),
+            field=models.ForeignKey(related_name='questions', to='grants.Program', on_delete=models.CASCADE),
             preserve_default=True,
         ),
         migrations.AlterField(
             model_name='resource',
             name='program',
-            field=models.ForeignKey(related_name='resources', to='grants.Program'),
+            field=models.ForeignKey(related_name='resources', to='grants.Program', on_delete=models.CASCADE),
             preserve_default=True,
         ),
         migrations.AlterField(
             model_name='score',
             name='applicant',
-            field=models.ForeignKey(related_name='scores', to='grants.Applicant'),
+            field=models.ForeignKey(related_name='scores', to='grants.Applicant', on_delete=models.CASCADE),
             preserve_default=True,
         ),
         migrations.AlterField(
@@ -75,7 +75,7 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='score',
             name='user',
-            field=models.ForeignKey(related_name='scores', to=settings.AUTH_USER_MODEL),
+            field=models.ForeignKey(related_name='scores', to=settings.AUTH_USER_MODEL, on_delete=models.CASCADE),
             preserve_default=True,
         ),
     ]

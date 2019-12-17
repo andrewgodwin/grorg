@@ -20,8 +20,8 @@ class Migration(migrations.Migration):
                 ('score', models.FloatField(null=True, blank=True)),
                 ('comment', models.TextField(null=True, blank=True)),
                 ('score_history', models.TextField(null=True, blank=True)),
-                ('applicant', models.ForeignKey(to='grants.Applicant')),
-                ('user', models.ForeignKey(to=settings.AUTH_USER_MODEL)),
+                ('applicant', models.ForeignKey(to='grants.Applicant', on_delete=models.CASCADE)),
+                ('user', models.ForeignKey(to=settings.AUTH_USER_MODEL, on_delete=models.CASCADE)),
             ],
             options={
             },
