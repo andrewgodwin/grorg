@@ -64,7 +64,7 @@ class Migration(migrations.Migration):
             name='Question',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('type', models.CharField(max_length=50, choices=[(b'boolean', b'Yes/No'), (b'text', b'Text'), (b'integer', b'Integer value')])),
+                ('type', models.CharField(max_length=50, choices=[('boolean', 'Yes/No'), ('text', 'Text'), ('integer', 'Integer value')])),
                 ('question', models.TextField()),
                 ('order', models.IntegerField(default=0)),
                 ('program', models.ForeignKey(to='grants.Program', to_field='id', on_delete=models.CASCADE)),
@@ -84,7 +84,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('name', models.CharField(max_length=100)),
-                ('type', models.CharField(max_length=50, choices=[(b'money', b'Money'), (b'ticket', b'Ticket'), (b'place', b'Place'), (b'accomodation', b'Accomodation')])),
+                ('type', models.CharField(max_length=50, choices=[('money', 'Money'), ('ticket', 'Ticket'), ('place', 'Place'), ('accomodation', 'Accomodation')])),
                 ('program', models.ForeignKey(to='grants.Program', to_field='id', on_delete=models.CASCADE)),
             ],
             options={

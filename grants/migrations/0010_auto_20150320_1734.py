@@ -69,7 +69,7 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='score',
             name='score',
-            field=models.FloatField(help_text=b'From 1 (terrible) to 5 (excellent)', null=True, blank=True),
+            field=models.FloatField(help_text='From 1 (terrible) to 5 (excellent)', null=True, blank=True),
             preserve_default=True,
         ),
         migrations.AlterField(

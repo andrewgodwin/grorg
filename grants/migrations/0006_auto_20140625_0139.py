@@ -27,11 +27,11 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='score',
             name='comment',
-            field=models.TextField(help_text=b'Seen only by other voters, not by the applicant', null=True, blank=True),
+            field=models.TextField(help_text='Seen only by other voters, not by the applicant', null=True, blank=True),
         ),
         migrations.AlterField(
             model_name='score',
             name='score',
-            field=models.FloatField(help_text=b'From 0 (terrible) to 5 (excellent)', null=True, blank=True),
+            field=models.FloatField(help_text='From 0 (terrible) to 5 (excellent)', null=True, blank=True),
         ),
     ]

@@ -29,10 +29,10 @@ class Migration(migrations.Migration):
         ),
         migrations.AlterUniqueTogether(
             name='score',
-            unique_together=set([(b'applicant', b'user')]),
+            unique_together=set([('applicant', 'user')]),
         ),
         migrations.AlterUniqueTogether(
             name='answer',
-            unique_together=set([(b'applicant', b'question')]),
+            unique_together=set([('applicant', 'question')]),
         ),
     ]

@@ -25,6 +25,6 @@ class Migration(migrations.Migration):
         ),
         migrations.AlterUniqueTogether(
             name='allocation',
-            unique_together=set([(b'applicant', b'resource')]),
+            unique_together=set([('applicant', 'resource')]),
         ),
     ]
