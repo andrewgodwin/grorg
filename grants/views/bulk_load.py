@@ -27,7 +27,7 @@ class BulkLoader(ProgramMixin):
         else:
             csv_obj = UploadedCSV.objects.get(pk=request.POST["csv_id"])
         # We always get a CSV file - parse it.
-        reader = csv.reader([x + "\n" for x in str(csv_obj.csv).split("\n")])
+        reader = csv.reader([x + "\n" for x in csv_obj.csv.decode().split("\n")])
         rows = list(reader)
         headers = rows[0]
         column_choices = [("", "---")] + list(enumerate(headers))
