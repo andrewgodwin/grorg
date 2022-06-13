@@ -23,7 +23,7 @@ class Program(models.Model):
 
     users = models.ManyToManyField("users.User", blank=True)
 
-    def __unicode__(self):
+    def __str__(self):
         return self.name
 
     class urls(Urls):
@@ -64,7 +64,7 @@ class Resource(models.Model):
     class urls(Urls):
         edit = "{self.program.urls.resources}{self.id}/"
 
-    def __unicode__(self):
+    def __str__(self):
         return self.name
 
     def fa_icon(self):
@@ -103,7 +103,7 @@ class Question(models.Model):
     class urls(Urls):
         edit = "{self.program.urls.questions}{self.id}/"
 
-    def __unicode__(self):
+    def __str__(self):
         return self.question
 
     def can_delete(self):
@@ -125,7 +125,7 @@ class Applicant(models.Model):
         view = "{self.program.urls.applicants}{self.id}/"
         allocations = "{view}allocations/"
 
-    def __unicode__(self):
+    def __str__(self):
         return self.name
 
     def average_score(self):
