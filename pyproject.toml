@@ -1,0 +1,21 @@
+[tool.black]
+target-version = ["py39"]
+
+[tool.isort]
+add_imports = "from __future__ import annotations"
+honor_noqa = true
+profile = "black"
+
+[tool.mypy]
+check_untyped_defs = true
+disallow_any_generics = true
+disallow_incomplete_defs = true
+disallow_untyped_defs = true
+no_implicit_optional = true
+show_error_codes = true
+warn_unreachable = true
+warn_unused_ignores = true
+
+[[tool.mypy.overrides]]
+allow_untyped_defs = true
+module = "*.tests.*"
