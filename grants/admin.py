@@ -6,18 +6,23 @@ from grants import models
 
 
 class AnswerInline(admin.StackedInline):
-    model = models.Answer
     extra = 1
+    model = models.Answer
+    raw_id_fields = ["question"]
+    readonly_fields = ["question", "answer"]
 
 
 @admin.register(models.Allocation)
 class AllocationAdmin(admin.ModelAdmin):
-    pass
+    raw_id_fields = ["applicant"]
 
 
 @admin.register(models.Answer)
 class AnswerAdmin(admin.ModelAdmin):
-    pass
+    list_display = ["applicant", "question"]
+    raw_id_fields = ["applicant", "question"]
+    readonly_fields = ["applicant", "question", "answer"]
+    search_fields = ["applicant__name", "question__question"]
 
 
 @admin.register(models.Applicant)
@@ -36,17 +41,31 @@ class ProgramAdmin(admin.ModelAdmin):
 
 @admin.register(models.Question)
 class QuestionAdmin(admin.ModelAdmin):
-    pass
+    list_display = [
+        "program",
+        "question",
+        "order",
+        "required",
+        "type",
+    ]
+    list_filter = [
+        "required",
+        "type",
+    ]
+    raw_id_fields = ["program"]
+    search_fields = ["question"]
 
 
 @admin.register(models.Resource)
 class ResourceAdmin(admin.ModelAdmin):
-    pass
+    raw_id_fields = ["program"]
 
 
 @admin.register(models.Score)
 class ScoreAdmin(admin.ModelAdmin):
     list_display = ["id", "applicant", "user"]
+    raw_id_fields = ["applicant", "user"]
+    readonly_fields = ["applicant", "user", "score", "comment", "score_history"]
 
 
 @admin.register(models.UploadedCSV)
