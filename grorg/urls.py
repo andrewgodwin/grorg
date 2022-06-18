@@ -7,7 +7,6 @@ from grants.views import bulk_load, program
 from grorg.views import favicon
 from users import views as users
 
-
 urlpatterns = [
     path("favicon.ico", favicon),
     path("", program.index),
