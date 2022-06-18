@@ -19,7 +19,7 @@ COPY . .
 
 RUN python manage.py collectstatic --noinput
 
-EXPOSE 8080
+EXPOSE 8000
 
 # replace APP_NAME with module name
-CMD ["gunicorn", "--bind", ":8080", "--workers", "2", "grorg.wsgi"]
+CMD ["gunicorn", "--bind", ":8000", "--workers", "2", "grorg.wsgi"]
