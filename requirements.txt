@@ -16,6 +16,8 @@ django-cache-url==3.4.2
     # via environs
 environs[django]==9.5.0
     # via -r ./requirements.in
+gunicorn==20.1.0
+    # via -r ./requirements.in
 marshmallow==3.16.0
     # via environs
 packaging==21.3
@@ -32,3 +34,6 @@ urlman==2.0.1
     # via -r ./requirements.in
 whitenoise==6.2.0
     # via -r ./requirements.in
+
+# The following packages are considered to be unsafe in a requirements file:
+# setuptools

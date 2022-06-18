@@ -1,4 +1,5 @@
 Django<4.0
 environs[django]
+gunicorn
 urlman
 whitenoise
