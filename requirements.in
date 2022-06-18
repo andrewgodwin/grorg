@@ -1,5 +1,6 @@
 Django<4.0
 environs[django]
 gunicorn
+psycopg2-binary
 urlman
 whitenoise
