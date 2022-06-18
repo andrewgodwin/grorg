@@ -11,23 +11,24 @@ https://docs.djangoproject.com/en/dev/ref/settings/
 from __future__ import annotations
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-import os
+import environs
 
-BASE_DIR = os.path.dirname(os.path.dirname(__file__))
+env = environs.Env()
 
-SECRET_KEY = "secret"
+BASE_DIR = environs.Path(__file__).resolve(strict=True).parent.parent
 
-DEBUG = True
+SECRET_KEY = env("SECRET_KEY", default="secret")
 
-TEMPLATE_DEBUG = True
+DEBUG = env.bool("DJANGO_DEBUG", default=False)
 
-ALLOWED_HOSTS = []
-
+ALLOWED_HOSTS = env.list("ALLOWED_HOSTS", default=[])
 
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [os.path.join(BASE_DIR, "templates")],
+        "DIRS": [
+            str(BASE_DIR.joinpath("templates")),
+        ],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -35,7 +36,8 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
-            ]
+            ],
+            "debug": DEBUG,
         },
     }
 ]
@@ -77,10 +79,7 @@ LOGOUT_REDIRECT_URL = "/"
 # https://docs.djangoproject.com/en/dev/ref/settings/#databases
 
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": os.path.join(BASE_DIR, "db.sqlite3"),
-    }
+    "default": env.dj_db_url("DATABASE_URL", default="sqlite3:///db.sqlite3"),
 }
 
 # Internationalization
@@ -102,11 +101,4 @@ USE_TZ = True
 
 STATIC_URL = "/static/"
 STATIC_ROOT = "staticfiles"
-
-STATICFILES_DIRS = (os.path.join(BASE_DIR, "static"),)
-
-# Import local settings if present
-try:
-    from local_settings import *  # noqa
-except ImportError:
-    pass
+STATICFILES_DIRS = (str(BASE_DIR.joinpath("staticfiles")),)
