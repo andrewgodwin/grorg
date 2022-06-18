@@ -65,5 +65,5 @@ class User(AbstractBaseUser, PermissionsMixin):
         """
         send_mail(subject, message, from_email, [self.email], **kwargs)
 
-    def __unicode__(self):
+    def __str__(self):
         return self.name or self.email
