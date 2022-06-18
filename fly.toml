@@ -8,6 +8,9 @@ processes = []
 [env]
   PORT = "8080"
 
+[deploy]
+  release_command = "python manage.py migrate --noinput"
+
 [experimental]
   allowed_public_ports = []
   auto_rollback = true
