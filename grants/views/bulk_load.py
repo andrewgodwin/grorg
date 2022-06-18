@@ -27,13 +27,17 @@ class BulkLoader(ProgramMixin):
         # If there's a CSV, load it into the database, otherwise retrieve
         # the one we stored there before.
         if "csv" in request.FILES:
-            csv_obj = UploadedCSV.objects.create(csv=request.FILES["csv"].read())
+            csv_obj = UploadedCSV.objects.create(
+                csv=request.FILES["csv"].read().decode()
+            )
         else:
             csv_obj = UploadedCSV.objects.get(pk=request.POST["csv_id"])
+
         # We always get a CSV file - parse it.
         reader = csv.reader(
-            [x + "\n" for x in csv_obj.csv.decode("utf8").split("\n") if len(x.strip())]
+            [x + "\n" for x in csv_obj.csv.split("\n") if len(x.strip())]
         )
+
         rows = list(reader)
         headers = rows[0]
         column_choices = [("", "---")] + list(enumerate(headers))
