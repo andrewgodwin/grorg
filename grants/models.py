@@ -1,3 +1,4 @@
+from django.core.validators import MinValueValidator
 from django.db import models
 from urlman import Urls
 
@@ -89,6 +90,7 @@ class Question(models.Model):
 
     TYPE_CHOICES = [
         ("boolean", "Yes/No"),
+        ("boolean_sortpriority", "Yes/No with sort priority"),
         ("text", "Short text"),
         ("textarea", "Long text"),
         ("integer", "Integer value"),
@@ -98,6 +100,7 @@ class Question(models.Model):
     type = models.CharField(max_length=50, choices=TYPE_CHOICES)
     question = models.TextField()
     required = models.BooleanField(default=False)
+    sort_priority = models.IntegerField(null=True, blank=True, validators=[MinValueValidator(1)])
     order = models.IntegerField(default=0)
 
     class urls(Urls):
@@ -134,6 +137,13 @@ class Applicant(models.Model):
             return None
         else:
             return sum(scores) / float(len(scores))
+
+    def sort_priority(self):
+        priority = self.average_score()
+        priority_answers = self.answers.filter(question__type="boolean_sortpriority", answer='Yes')
+        answer_priority = sum([answer.question.sort_priority for answer in priority_answers])
+        priority += answer_priority * 1000
+        return priority
 
     def variance(self):
         data = [s.score for s in self.scores.all() if s.score]
@@ -177,6 +187,7 @@ class Answer(models.Model):
     answer = models.TextField()
 
     class Meta:
+        ordering = ['question']
         unique_together = [
             ("applicant", "question"),
         ]

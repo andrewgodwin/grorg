@@ -12,18 +12,21 @@
                 <th>Question</th>
                 <th>Type</th>
                 <th>Required</th>
+                <th>Sort priority</th>
                 <th>Actions</th>
             </tr>
             <tr>
                 <td>Name</td>
                 <td>Text</td>
                 <td><i class="fa fa-check green"></i></td>
+                <td class="empty">(none)</td>
                 <td class="empty">Built in</td>
             </tr>
             <tr>
                 <td>Email</td>
                 <td>Email</td>
                 <td><i class="fa fa-check green"></i></td>
+                <td class="empty">(none)</td>
                 <td class="empty">Built in</td>
             </tr>
             {% for question in questions %}
@@ -37,6 +40,12 @@
                         <i class="fa fa-times red"></i>
                     {% endif %}
                 </td>
+                {% if question.sort_priority %}
+                <td>{{ question.sort_priority }}</td>
+                {% else %}
+                    <td class="empty">(none)</td>
+                {% endif %}
+
                 <td>
                     <a href="{{ question.urls.edit }}" class="button">Edit</a>
                 </td>
@@ -46,6 +55,7 @@
         <h3>Create a new question</h3>
         <form action="." method="POST">
             {% include "_form.html" %}
+            {% include "_sortpriority_explanation.html" %}
         </form>
     </div>
 </div>
