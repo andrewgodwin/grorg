@@ -233,5 +233,5 @@ class UploadedCSV(models.Model):
     A place to store uploaded CSV files while they're being mapped.
     """
 
-    csv = models.BinaryField()
+    csv = models.TextField()
     uploaded = models.DateTimeField(auto_now_add=True)
