@@ -6,8 +6,26 @@
 #
 asgiref==3.5.2
     # via django
-django==4.0.5
+dj-database-url==0.5.0
+    # via environs
+dj-email-url==1.0.5
+    # via environs
+django==3.2.13
     # via -r ./requirements.in
+django-cache-url==3.4.2
+    # via environs
+environs[django]==9.5.0
+    # via -r ./requirements.in
+marshmallow==3.16.0
+    # via environs
+packaging==21.3
+    # via marshmallow
+pyparsing==3.0.9
+    # via packaging
+python-dotenv==0.20.0
+    # via environs
+pytz==2022.1
+    # via django
 sqlparse==0.4.2
     # via django
 urlman==2.0.1
