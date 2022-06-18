@@ -19,7 +19,6 @@ COPY . .
 
 RUN python manage.py collectstatic --noinput
 
-
 EXPOSE 8080
 
 # replace APP_NAME with module name
