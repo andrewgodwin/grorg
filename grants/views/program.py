@@ -1,20 +1,30 @@
+from __future__ import annotations
+
 import collections
+
 from django import forms
-from django.utils import timezone
 from django.http import Http404
-from django.shortcuts import render, redirect
-from django.views.generic import View, TemplateView, ListView, FormView, UpdateView
-from ..models import Program, Question, Answer, Applicant, Score, Resource
-from ..forms import QuestionForm, BaseApplyForm, ScoreForm, ResourceForm, AllocationForm
+from django.shortcuts import redirect, render
+from django.utils import timezone
+from django.views.generic import FormView, ListView, TemplateView, UpdateView, View
+
+from ..forms import AllocationForm, BaseApplyForm, QuestionForm, ResourceForm, ScoreForm
+from ..models import Answer, Applicant, Program, Question, Resource, Score
 
 
 def index(request):
-    return render(request, "index.html", {
-        "accessible_programs": Program.objects.filter(users__pk=request.user.pk).order_by("name"),
-    })
+    return render(
+        request,
+        "index.html",
+        {
+            "accessible_programs": Program.objects.filter(
+                users__pk=request.user.pk
+            ).order_by("name"),
+        },
+    )
 
 
-class ProgramMixin(object):
+class ProgramMixin:
     """
     Generic view base class which does things in context of a Program.
     """
@@ -28,12 +38,12 @@ class ProgramMixin(object):
             return redirect("login")
         if self.login_required and not self.program.user_allowed(self.request.user):
             raise Http404("Not logged in")
-        return super(ProgramMixin, self).dispatch(*args, **kwargs)
+        return super().dispatch(*args, **kwargs)
 
     def render_to_response(self, context, **kwargs):
-        context['program'] = self.program
-        context['user_allowed_program'] = self.program.user_allowed(self.request.user)
-        return super(ProgramMixin, self).render_to_response(context, **kwargs)
+        context["program"] = self.program
+        context["user_allowed_program"] = self.program.user_allowed(self.request.user)
+        return super().render_to_response(context, **kwargs)
 
 
 class ProgramHome(ProgramMixin, TemplateView):
@@ -49,7 +59,9 @@ class ProgramHome(ProgramMixin, TemplateView):
             user.num_votes = user.scores.filter(applicant__program=self.program).count()
         return {
             "num_applicants": self.program.applicants.count(),
-            "num_scored": self.request.user.scores.filter(applicant__program=self.program).count(),
+            "num_scored": self.request.user.scores.filter(
+                applicant__program=self.program
+            ).count(),
             "users": users,
         }
 
@@ -63,8 +75,8 @@ class ProgramQuestions(ProgramMixin, FormView):
     form_class = QuestionForm
 
     def get_context_data(self, **kwargs):
-        context = super(ProgramQuestions, self).get_context_data(**kwargs)
-        context['questions'] = self.program.questions.order_by("order")
+        context = super().get_context_data(**kwargs)
+        context["questions"] = self.program.questions.order_by("order")
         return context
 
     def form_valid(self, form):
@@ -104,8 +116,8 @@ class ProgramApply(ProgramMixin, FormView):
     template_name = "program-apply.html"
 
     def get_form_kwargs(self):
-        kwargs = super(ProgramApply, self).get_form_kwargs()
-        kwargs['program'] = self.program
+        kwargs = super().get_form_kwargs()
+        kwargs["program"] = self.program
         return kwargs
 
     def get_form_class(self):
@@ -117,23 +129,25 @@ class ProgramApply(ProgramMixin, FormView):
                 "text": forms.CharField,
                 "textarea": forms.CharField,
                 "integer": forms.IntegerField,
-            }[question.type](required=question.required, widget=widget, label=question.question)
-        return type("ApplicationForm", (BaseApplyForm, ), fields)
+            }[question.type](
+                required=question.required, widget=widget, label=question.question
+            )
+        return type("ApplicationForm", (BaseApplyForm,), fields)
 
     def form_valid(self, form):
         applicant = Applicant.objects.create(
-            program = self.program,
-            name = form.cleaned_data["name"],
-            email = form.cleaned_data["email"],
-            applied = timezone.now(),
+            program=self.program,
+            name=form.cleaned_data["name"],
+            email=form.cleaned_data["email"],
+            applied=timezone.now(),
         )
         for question in self.program.questions.order_by("order"):
             value = form.cleaned_data.get("question-%s" % question.id, None) or None
             if value:
                 Answer.objects.create(
-                    applicant = applicant,
-                    question = question,
-                    answer = value,
+                    applicant=applicant,
+                    question=question,
+                    answer=value,
                 )
         return redirect(self.program.urls.apply_success)
 
@@ -162,20 +176,24 @@ class ProgramApplicants(ProgramMixin, ListView):
         else:
             self.sort = "applied"
         # Fetch applicants
-        applicants = list(self.program.applicants.prefetch_related("scores").order_by("-applied"))
+        applicants = list(
+            self.program.applicants.prefetch_related("scores").order_by("-applied")
+        )
         for applicant in applicants:
-            applicant.has_scored = applicant.scores.filter(user=self.request.user).exists()
+            applicant.has_scored = applicant.scores.filter(
+                user=self.request.user
+            ).exists()
             if applicant.has_scored:
                 applicant.average_score = applicant.average_score()
             else:
-                applicant.average_score = -1 
+                applicant.average_score = -1
         if self.sort == "score":
             applicants.sort(key=lambda a: a.average_score, reverse=True)
         return applicants
 
     def get_context_data(self):
-        context = super(ProgramApplicants, self).get_context_data()
-        context['sort'] = self.sort
+        context = super().get_context_data()
+        context["sort"] = self.sort
         return context
 
 
@@ -192,7 +210,9 @@ class ProgramApplicantView(ProgramMixin, TemplateView):
         for question in questions:
             question.answer = question.answers.filter(applicant=applicant).first()
         # See if we already scored this one
-        score = Score.objects.filter(applicant=applicant, user=self.request.user).first()
+        score = Score.objects.filter(
+            applicant=applicant, user=self.request.user
+        ).first()
         old_score = score.score if score else None
         if score:
             all_scores = Score.objects.filter(applicant=applicant)
@@ -207,7 +227,11 @@ class ProgramApplicantView(ProgramMixin, TemplateView):
                 new_score.user = self.request.user
                 if old_score and new_score.score != old_score:
                     new_score.score_history = ",".join(
-                        [x.strip() for x in (new_score.score_history or "").split(",") if x.strip()]
+                        [
+                            x.strip()
+                            for x in (new_score.score_history or "").split(",")
+                            if x.strip()
+                        ]
                         + ["%.1f" % old_score]
                     )
                 new_score.save()
@@ -217,12 +241,14 @@ class ProgramApplicantView(ProgramMixin, TemplateView):
                     return redirect(".")
         else:
             form = ScoreForm(instance=score)
-        return self.render_to_response({
-            "applicant": applicant,
-            "questions": questions,
-            "all_scores": all_scores,
-            "form": form,
-        })
+        return self.render_to_response(
+            {
+                "applicant": applicant,
+                "questions": questions,
+                "all_scores": all_scores,
+                "form": form,
+            }
+        )
 
     post = get
 
@@ -234,7 +260,11 @@ class RandomUnscoredApplicant(ProgramMixin, View):
     """
 
     def get(self, request):
-        applicant = self.program.applicants.exclude(scores__user=self.request.user).order_by("?").first()
+        applicant = (
+            self.program.applicants.exclude(scores__user=self.request.user)
+            .order_by("?")
+            .first()
+        )
         if applicant:
             return redirect(applicant.urls.view)
         else:
@@ -251,17 +281,17 @@ class ApplicantAllocations(ProgramMixin, FormView):
 
     def dispatch(self, *args, **kwargs):
         self.applicant = Applicant.objects.get(pk=kwargs.pop("applicant_id"))
-        return super(ApplicantAllocations, self).dispatch(*args, **kwargs)
+        return super().dispatch(*args, **kwargs)
 
     def get_form_kwargs(self):
-        kwargs = super(ApplicantAllocations, self).get_form_kwargs()
-        kwargs['applicant'] = self.applicant
+        kwargs = super().get_form_kwargs()
+        kwargs["applicant"] = self.applicant
         return kwargs
 
     def get_context_data(self, **kwargs):
-        context = super(ApplicantAllocations, self).get_context_data(**kwargs)
-        context['applicant'] = self.applicant
-        context['allocations'] = self.applicant.allocations.order_by("resource__name")
+        context = super().get_context_data(**kwargs)
+        context["applicant"] = self.applicant
+        context["allocations"] = self.applicant.allocations.order_by("resource__name")
         return context
 
     def form_valid(self, form):
@@ -275,8 +305,7 @@ class ApplicantAllocations(ProgramMixin, FormView):
         if "delete" in request.POST:
             self.applicant.allocations.filter(pk=request.POST["delete_id"]).delete()
             return redirect(self.applicant.urls.allocations)
-        return super(ApplicantAllocations, self).post(request, *args, **kwargs)
-
+        return super().post(request, *args, **kwargs)
 
 
 class ProgramResources(ProgramMixin, FormView):
@@ -288,8 +317,8 @@ class ProgramResources(ProgramMixin, FormView):
     template_name = "program-resources.html"
 
     def get_context_data(self, **kwargs):
-        context = super(ProgramResources, self).get_context_data(**kwargs)
-        context['resources'] = self.program.resources.order_by("name")
+        context = super().get_context_data(**kwargs)
+        context["resources"] = self.program.resources.order_by("name")
         return context
 
     def form_valid(self, form):

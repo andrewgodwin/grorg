@@ -1,12 +1,16 @@
+from __future__ import annotations
+
+import collections
 import csv
 import datetime
-import collections
+
 from django import forms
 from django.db.transaction import atomic
 from django.views.generic import TemplateView
+
+from ..forms import BulkLoadMapBaseForm, BulkLoadUploadForm
+from ..models import Answer, Applicant, Score, UploadedCSV
 from .program import ProgramMixin
-from ..forms import BulkLoadUploadForm, BulkLoadMapBaseForm
-from ..models import Applicant, Answer, UploadedCSV, Score
 
 
 class BulkLoader(ProgramMixin):
@@ -49,11 +53,11 @@ class BulkLoader(ProgramMixin):
             # Save and import!
             errors = []
             successful = 0
-            target_map = dict(
-                (name, int(value))
+            target_map = {
+                name: int(value)
                 for name, value in form.cleaned_data.items()
                 if name != "csv_id" and value
-            )
+            }
             for i, row in enumerate(rows[1:]):
                 try:
                     with atomic():
@@ -136,7 +140,7 @@ class BulkLoadApplicants(BulkLoader, TemplateView):
                     pass
         applicant.save()
         # Save answers
-        for key, offset in target_map.items():
+        for key, _offset in target_map.items():
             if key not in ["name", "email", "timestamp"]:
                 raw_answer = row[target_map[key]]
                 question = self.program.questions.get(pk=key.lstrip("q"))

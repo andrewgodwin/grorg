@@ -7,7 +7,10 @@ For more information on this file, see
 https://docs.djangoproject.com/en/dev/howto/deployment/wsgi/
 """
 
+from __future__ import annotations
+
 import os
+
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "grorg.settings")
 try:
     from whitenoise.django import DjangoWhiteNoise
@@ -16,7 +19,8 @@ except ImportError:
 else:
     USE_WHITENOISE = True
 
-from django.core.wsgi import get_wsgi_application
+from django.core.wsgi import get_wsgi_application  # noqa
+
 application = get_wsgi_application()
 
 if USE_WHITENOISE:
