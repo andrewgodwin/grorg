@@ -339,7 +339,7 @@ ul.real {
         padding: 5px;
     }
     .field input[name="title"], .field textarea {
-        width: 90%;
+        width: 100%;
     }
     .field .help-text {
         font-size: 14px;
