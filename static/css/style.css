@@ -338,7 +338,7 @@ ul.real {
         border: 1px solid #666;
         padding: 5px;
     }
-    .field input[name="title"] {
+    .field input[name="title"], .field textarea {
         width: 90%;
     }
     .field .help-text {
