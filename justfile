@@ -10,12 +10,12 @@ set dotenv-load := false
     just --fmt --unstable
 
 @pre-commit:
-    git ls-files -- . | xargs pipx run pre-commit run --config=.pre-commit-config.yaml --files
+    pre-commit run --all-files
 
 @up:
     python manage.py runserver
 
 @update:
     pip install -U pip pip-tools
-    pip install -U -r ./requirements.in
-    pip-compile ./requirements.in
+    pip install -U -r requirements.in
+    pip-compile requirements.in
