@@ -8,7 +8,6 @@ from .models import User
 
 
 class RegisterForm(forms.Form):
-
     name = forms.CharField(required=True)
     email = forms.EmailField(required=True)
     password = forms.CharField(widget=forms.PasswordInput, required=True)
@@ -29,7 +28,6 @@ class RegisterForm(forms.Form):
 
 
 class JoinForm(forms.Form):
-
     program_code = forms.CharField(required=True)
 
     def clean_program_code(self):

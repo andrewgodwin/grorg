@@ -5,47 +5,47 @@
 {% block body_class %}program-home{% endblock %}
 
 {% block content %}
-<div class="section">
-    <div class="main-column">
-        <h3>Applicants</h3>
-        <p>
-            <b>{{ num_applicants }}</b> application{{ num_applicants|pluralize }} received,
-            of which you have scored <b>{{ num_scored }}</b>.
-        </p>
-        <p>
-            <a href="{{ program.urls.applicants }}" class="button boring">View applicants</a>
-            {% if num_scored < num_applicants %}
-                <a href="{{ program.urls.score_random }}" class="button">Score random applicant</a>
-            {% endif %}
-        </p>
+    <div class="section">
+        <div class="main-column">
+            <h3>Applicants</h3>
+            <p>
+                <b>{{ num_applicants }}</b> application{{ num_applicants|pluralize }} received,
+                of which you have scored <b>{{ num_scored }}</b>.
+            </p>
+            <p>
+                <a href="{{ program.urls.applicants }}" class="button boring">View applicants</a>
+                {% if num_scored < num_applicants %}
+                    <a href="{{ program.urls.score_random }}" class="button">Score random applicant</a>
+                {% endif %}
+            </p>
 
-        <h3>Resources</h3>
-        <p>
-        {% for resource in program.resources.all %}
-            <i class="fa fa-{{ resource.fa_icon }}"></i> <b>{{ resource }}</b>:
-            {{ resource.amount_allocated }} allocated, {{ resource.amount_remaining }} remaining <br>
-        {% empty %}
-            <span class="empty">No resources defined.</span>
-        {% endfor %}
-        </p>
-        <p>
-            <a href="{{ program.urls.resources }}" class="button boring">View resources</a>
-        </p>
+            <h3>Resources</h3>
+            <p>
+                {% for resource in program.resources.all %}
+                    <i class="fa fa-{{ resource.fa_icon }}"></i> <b>{{ resource }}</b>:
+                    {{ resource.amount_allocated }} allocated, {{ resource.amount_remaining }} remaining <br>
+                {% empty %}
+                    <span class="empty">No resources defined.</span>
+                {% endfor %}
+            </p>
+            <p>
+                <a href="{{ program.urls.resources }}" class="button boring">View resources</a>
+            </p>
 
-        <h3>Users</h3>
-        <p>The following users are assigned to this program:</p>
-        <ul class="real">
-            {% for user in users %}
-                <li>{{ user }} ({{ user.num_votes }} vote{{ user.num_votes|pluralize }})</li>
-            {% empty %}
-                <li class="empty">No users assigned</li>
-            {% endfor %}
-        </ul>
-        <p>
-            Other users can sign up using the program code, which is
-            <tt>{{ program.join_code }}</tt>. Only give this code to people
-            you trust; anyone with it can sign up and see voting results.
-        </p>
+            <h3>Users</h3>
+            <p>The following users are assigned to this program:</p>
+            <ul class="real">
+                {% for user in users %}
+                    <li>{{ user }} ({{ user.num_votes }} vote{{ user.num_votes|pluralize }})</li>
+                {% empty %}
+                    <li class="empty">No users assigned</li>
+                {% endfor %}
+            </ul>
+            <p>
+                Other users can sign up using the program code, which is
+                <tt>{{ program.join_code }}</tt>. Only give this code to people
+                you trust; anyone with it can sign up and see voting results.
+            </p>
+        </div>
     </div>
-</div>
 {% endblock %}

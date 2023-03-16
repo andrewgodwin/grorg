@@ -3,24 +3,24 @@
 {% block whole_title %}Grorg{% endblock %}
 
 {% block content %}
-<div class="section">
-    <div class="main-column">
-        <h2>Welcome to Grorg.</h2>
-        <p>
-            This is the semi-experimental system to help manage grant applications.
-            Please report problems in <a href="https://github.com/djangocon/grorg/discussions">our GitHub discussions</a>.
-        </p>
-        {% if user.is_authenticated %}
-            <h3>Programs</h3>
-            {% for program in accessible_programs %}
-                <p>
-                    <a href="{{ program.urls.view }}">{{ program.name }}</a>
-                </p>
-            {% empty %}
-                <p class="empty">No programs are available to you at this time.</p>
-            {% endfor %}
-        {% endif %}
-        <p>Cheers to <a href="https://twitter.com/andrewgodwin">Andrew Godwin</a> for developing grorg.</p>
+    <div class="section">
+        <div class="main-column">
+            <h2>Welcome to Grorg.</h2>
+            <p>
+                This is the semi-experimental system to help manage grant applications.
+                Please report problems in <a href="https://github.com/djangocon/grorg/discussions">our GitHub discussions</a>.
+            </p>
+            {% if user.is_authenticated %}
+                <h3>Programs</h3>
+                {% for program in accessible_programs %}
+                    <p>
+                        <a href="{{ program.urls.view }}">{{ program.name }}</a>
+                    </p>
+                {% empty %}
+                    <p class="empty">No programs are available to you at this time.</p>
+                {% endfor %}
+            {% endif %}
+            <p>Cheers to <a href="https://twitter.com/andrewgodwin">Andrew Godwin</a> for developing grorg.</p>
+        </div>
     </div>
-</div>
 {% endblock %}

@@ -3,12 +3,12 @@
 {% block title %}Questions - {{ program }}{% endblock %}
 
 {% block content %}
-<div class="section">
-    <div class="main-column">
-        <h3>Edit question</h3>
-        <form action="." method="POST">
-            {% include "_form.html" with include_delete=question.can_delete %}
-        </form>
+    <div class="section">
+        <div class="main-column">
+            <h3>Edit question</h3>
+            <form action="." method="POST">
+                {% include "_form.html" with include_delete=question.can_delete %}
+            </form>
+        </div>
     </div>
-</div>
 {% endblock %}

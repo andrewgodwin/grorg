@@ -3,57 +3,57 @@
 {% block title %}Applicants - {{ program }}{% endblock %}
 
 {% block content %}
-<div class="section">
-    <h1>Applicants</h1>
+    <div class="section">
+        <h1>Applicants</h1>
 
-    <table class="nice">
-        <tr>
-            <th>Name</th>
-            <th>Email</th>
-            <th><a href="?sort=applied">Applied {% if sort == "applied" %}<i class="fa fa-chevron-circle-down"></i>{% endif %}</a></th>
-            <th><a href="?sort=score">Score {% if sort == "score" %}<i class="fa fa-chevron-circle-down"></i>{% endif %}</a></th>
-            <th>Allocated</th>
-            <th></th>
-        </tr>
-        {% for applicant in applicants %}
-        <tr>
-            <td>{{ applicant.name }}</td>
-            <td>{{ applicant.email }}</td>
-            <td class="small">{{ applicant.applied|date:"j M Y P" }}</td>
-            {% if applicant.has_scored %}
-                <td>
-                    {{ applicant.average_score|floatformat:"1"|default:"-" }}
-                    <span class="num_votes">({{ applicant.scores.count }} vote{{ applicant.scores.count|pluralize }}, &sigma;={{ applicant.stdev|floatformat:"1" }})</span>
-                </td>
-                <td class="{% if not applicant.allocations.exists %}empty{% endif %}">
-                    {% for allocation in applicant.allocations.all %}
-                        <i class="fa fa-{{ allocation.resource.fa_icon }}"></i> {{ allocation.amount }}&nbsp;
-                    {% empty %}
-                        (none)
-                    {% endfor %}
-                </td>
-                <td>
-                    <a href="{{ applicant.urls.view }}" class="button boring">View</a>
-                    <a href="{{ applicant.urls.allocations }}" class="button boring">Allocate</a>
-                </td>
-            {% else %}
-                <td class="empty">(hidden)</td>
-                <td class="empty">(hidden)</td>
-                <td>
-                    <a href="{{ applicant.urls.view }}" class="button">Score</a>
-                </td>
-            {% endif %}
-        </tr>
-        {% empty %}
-        <tr>
-            <td colspan="3" class="empty">No applicants.</td>
-        </tr>
-        {% endfor %}
-    </table>
+        <table class="nice">
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th><a href="?sort=applied">Applied {% if sort == "applied" %}<i class="fa fa-chevron-circle-down"></i>{% endif %}</a></th>
+                <th><a href="?sort=score">Score {% if sort == "score" %}<i class="fa fa-chevron-circle-down"></i>{% endif %}</a></th>
+                <th>Allocated</th>
+                <th></th>
+            </tr>
+            {% for applicant in applicants %}
+                <tr>
+                    <td>{{ applicant.name }}</td>
+                    <td>{{ applicant.email }}</td>
+                    <td class="small">{{ applicant.applied|date:"j M Y P" }}</td>
+                    {% if applicant.has_scored %}
+                        <td>
+                            {{ applicant.average_score|floatformat:"1"|default:"-" }}
+                            <span class="num_votes">({{ applicant.scores.count }} vote{{ applicant.scores.count|pluralize }}, &sigma;={{ applicant.stdev|floatformat:"1" }})</span>
+                        </td>
+                        <td class="{% if not applicant.allocations.exists %}empty{% endif %}">
+                            {% for allocation in applicant.allocations.all %}
+                                <i class="fa fa-{{ allocation.resource.fa_icon }}"></i> {{ allocation.amount }}&nbsp;
+                            {% empty %}
+                                (none)
+                            {% endfor %}
+                        </td>
+                        <td>
+                            <a href="{{ applicant.urls.view }}" class="button boring">View</a>
+                            <a href="{{ applicant.urls.allocations }}" class="button boring">Allocate</a>
+                        </td>
+                    {% else %}
+                        <td class="empty">(hidden)</td>
+                        <td class="empty">(hidden)</td>
+                        <td>
+                            <a href="{{ applicant.urls.view }}" class="button">Score</a>
+                        </td>
+                    {% endif %}
+                </tr>
+            {% empty %}
+                <tr>
+                    <td colspan="3" class="empty">No applicants.</td>
+                </tr>
+            {% endfor %}
+        </table>
 
-    <div class="action-bar">
-        <a href="{{ program.urls.applicants_bulk }}" class="button boring">Bulk load applicants</a>
-        <a href="{{ program.urls.scores_bulk }}" class="button boring">Bulk load your scores</a>
+        <div class="action-bar">
+            <a href="{{ program.urls.applicants_bulk }}" class="button boring">Bulk load applicants</a>
+            <a href="{{ program.urls.scores_bulk }}" class="button boring">Bulk load your scores</a>
+        </div>
     </div>
-</div>
 {% endblock %}

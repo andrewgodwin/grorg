@@ -22,7 +22,6 @@ class QuestionForm(forms.ModelForm):
 
 
 class BaseApplyForm(forms.Form):
-
     name = forms.CharField(required=True)
     email = forms.EmailField(required=True)
 
@@ -40,12 +39,10 @@ class BaseApplyForm(forms.Form):
 
 
 class BulkLoadUploadForm(forms.Form):
-
     csv = forms.FileField(required=True)
 
 
 class BulkLoadMapBaseForm(forms.Form):
-
     csv_id = forms.CharField(required=True, widget=forms.HiddenInput)
 
     def clean(self):

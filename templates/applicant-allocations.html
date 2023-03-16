@@ -3,38 +3,38 @@
 {% block title %}Allocations for {{ applicant }} - {{ program }}{% endblock %}
 
 {% block content %}
-<div class="section">
-    <div class="main-column">
-        <h1>Allocations for {{ applicant }}</h1>
+    <div class="section">
+        <div class="main-column">
+            <h1>Allocations for {{ applicant }}</h1>
 
-        <table class="nice">
-            <tr>
-                <th>Resource</th>
-                <th>Amount</th>
-                <th></th>
-            </tr>
-            {% for allocation in allocations %}
-            <tr>
-                <td>{{ allocation.resource }}</td>
-                <td>{{ allocation.amount }}</td>
-                <td>
-                    <form action="." method="POST">
-                        {% csrf_token %}
-                        <input type="hidden" name="delete_id" value="{{ allocation.pk }}">
-                        <input type="submit" name="delete" class="button serious" value="Delete">
-                    </form>
-                </td>
-            </tr>
-            {% empty %}
-            <tr>
-                <td colspan="3" class="empty">No allocations.</td>
-            </tr>
-            {% endfor %}
-        </table>
-        <h3>Allocate resource</h3>
-        <form action="." method="POST">
-            {% include "_form.html" %}
-        </form>
+            <table class="nice">
+                <tr>
+                    <th>Resource</th>
+                    <th>Amount</th>
+                    <th></th>
+                </tr>
+                {% for allocation in allocations %}
+                    <tr>
+                        <td>{{ allocation.resource }}</td>
+                        <td>{{ allocation.amount }}</td>
+                        <td>
+                            <form action="." method="POST">
+                                {% csrf_token %}
+                                <input type="hidden" name="delete_id" value="{{ allocation.pk }}">
+                                <input type="submit" name="delete" class="button serious" value="Delete">
+                            </form>
+                        </td>
+                    </tr>
+                {% empty %}
+                    <tr>
+                        <td colspan="3" class="empty">No allocations.</td>
+                    </tr>
+                {% endfor %}
+            </table>
+            <h3>Allocate resource</h3>
+            <form action="." method="POST">
+                {% include "_form.html" %}
+            </form>
+        </div>
     </div>
-</div>
 {% endblock %}

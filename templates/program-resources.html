@@ -3,37 +3,37 @@
 {% block title %}Resources - {{ program }}{% endblock %}
 
 {% block content %}
-<div class="section">
-    <div class="main-column">
-        <h1>Resources</h1>
+    <div class="section">
+        <div class="main-column">
+            <h1>Resources</h1>
 
-        <table class="nice">
-            <tr>
-                <th>Name</th>
-                <th>Type</th>
-                <th>Amount</th>
-                <th>Actions</th>
-            </tr>
-            {% for resource in resources %}
-            <tr>
-                <td>{{ resource.name }}</td>
-                <td>{{ resource.get_type_display }}</td>
-                <td>{{ resource.amount }}</td>
-                <td>
-                    <a href="{{ resource.urls.edit }}" class="button">Edit</a>
-                </td>
-            </tr>
-            {% empty %}
-            <tr>
-                <td colspan="3" class="empty">No resources set.</td>
-            </tr>
-            {% endfor %}
-        </table>
+            <table class="nice">
+                <tr>
+                    <th>Name</th>
+                    <th>Type</th>
+                    <th>Amount</th>
+                    <th>Actions</th>
+                </tr>
+                {% for resource in resources %}
+                    <tr>
+                        <td>{{ resource.name }}</td>
+                        <td>{{ resource.get_type_display }}</td>
+                        <td>{{ resource.amount }}</td>
+                        <td>
+                            <a href="{{ resource.urls.edit }}" class="button">Edit</a>
+                        </td>
+                    </tr>
+                {% empty %}
+                    <tr>
+                        <td colspan="3" class="empty">No resources set.</td>
+                    </tr>
+                {% endfor %}
+            </table>
 
-        <h3>Create a new resource</h3>
-        <form action="." method="POST">
-            {% include "_form.html" %}
-        </form>
+            <h3>Create a new resource</h3>
+            <form action="." method="POST">
+                {% include "_form.html" %}
+            </form>
+        </div>
     </div>
-</div>
 {% endblock %}

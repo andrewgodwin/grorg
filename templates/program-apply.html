@@ -3,12 +3,12 @@
 {% block title %}Apply - {{ program }}{% endblock %}
 
 {% block content %}
-<div class="section">
-    <div class="main-column">
-        <h1>Apply</h1>
-        <form action="." method="POST">
-            {% include "_form.html" with submit_verb="Apply" %}
-        </form>
+    <div class="section">
+        <div class="main-column">
+            <h1>Apply</h1>
+            <form action="." method="POST">
+                {% include "_form.html" with submit_verb="Apply" %}
+            </form>
+        </div>
     </div>
-</div>
 {% endblock %}

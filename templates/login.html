@@ -3,12 +3,12 @@
 {% block whole_title %}Login{% endblock %}
 
 {% block content %}
-<div class="section">
-    <div class="main-column">
-        <h2>Login</h2>
-        <form action="." method="POST">
-            {% include "_form.html" with submit_verb="Login" %}
-        </form>
+    <div class="section">
+        <div class="main-column">
+            <h2>Login</h2>
+            <form action="." method="POST">
+                {% include "_form.html" with submit_verb="Login" %}
+            </form>
+        </div>
     </div>
-</div>
 {% endblock %}

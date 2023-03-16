@@ -3,23 +3,23 @@
 {% block title %}Bulk load applicants - {{ program }}{% endblock %}
 
 {% block content %}
-<div class="section">
-    <div class="main-column">
-        {% if form %}
-            <h1>Bulk load applicants</h1>
-            <form action="." method="POST" enctype="multipart/form-data">
-                {% include "_form.html" with submit_verb="Load" %}
-            </form>
-        {% else %}
-            <h1>Bulk load applicants result</h1>
-            <p>Loaded {{ successful }} row{{ successful|pluralize }} successfully.</p>
-            {% if errors %}
-                <h3>Errors</h3>
-                {% for offset, row, error in errors %}
-                    <p><b>Row {{ offset }}</b>: {{ error }}</p>
-                {% endfor %}
+    <div class="section">
+        <div class="main-column">
+            {% if form %}
+                <h1>Bulk load applicants</h1>
+                <form action="." method="POST" enctype="multipart/form-data">
+                    {% include "_form.html" with submit_verb="Load" %}
+                </form>
+            {% else %}
+                <h1>Bulk load applicants result</h1>
+                <p>Loaded {{ successful }} row{{ successful|pluralize }} successfully.</p>
+                {% if errors %}
+                    <h3>Errors</h3>
+                    {% for offset, row, error in errors %}
+                        <p><b>Row {{ offset }}</b>: {{ error }}</p>
+                    {% endfor %}
+                {% endif %}
             {% endif %}
-        {% endif %}
+        </div>
     </div>
-</div>
 {% endblock %}

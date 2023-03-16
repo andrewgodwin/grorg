@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from django.contrib import admin, auth
-from django.urls import path, re_path
+from django.urls import path
 
 from grants.views import bulk_load, program
 from grorg.views import favicon
@@ -15,39 +15,35 @@ urlpatterns = [
     path("register/", users.register),
     path("join/", users.join),
     path("admin/", admin.site.urls),
-    re_path(r"^(?P<program>[^/]+)/$", program.ProgramHome.as_view()),
-    re_path(r"^(?P<program>[^/]+)/questions/$", program.ProgramQuestions.as_view()),
-    re_path(
-        r"^(?P<program>[^/]+)/questions/(?P<question_id>[^/]+)/$",
+    path("<str:program>/", program.ProgramHome.as_view()),
+    path("<str:program>/questions/", program.ProgramQuestions.as_view()),
+    path(
+        "<str:program>/questions/<str:question_id>/",
         program.ProgramQuestionEdit.as_view(),
     ),
-    re_path(r"^(?P<program>[^/]+)/apply/$", program.ProgramApply.as_view()),
-    re_path(
-        r"^(?P<program>[^/]+)/apply/success/$", program.ProgramApplySuccess.as_view()
-    ),
-    re_path(r"^(?P<program>[^/]+)/applicants/$", program.ProgramApplicants.as_view()),
-    re_path(
-        r"^(?P<program>[^/]+)/applicants/bulk/$", bulk_load.BulkLoadApplicants.as_view()
-    ),
-    re_path(
-        r"^(?P<program>[^/]+)/applicants/bulk_scores/$",
+    path("<str:program>/apply/", program.ProgramApply.as_view()),
+    path("<str:program>/apply/success/", program.ProgramApplySuccess.as_view()),
+    path("<str:program>/applicants/", program.ProgramApplicants.as_view()),
+    path("<str:program>/applicants/bulk/", bulk_load.BulkLoadApplicants.as_view()),
+    path(
+        "<str:program>/applicants/bulk_scores/",
         bulk_load.BulkLoadScores.as_view(),
     ),
-    re_path(
-        r"^(?P<program>[^/]+)/applicants/random-unscored/$",
+    path(
+        "<str:program>/applicants/random-unscored/",
         program.RandomUnscoredApplicant.as_view(),
     ),
-    re_path(
-        r"^(?P<program>[^/]+)/applicants/(?P<applicant_id>[^/]+)/$",
+    path(
+        "<str:program>/applicants/<str:applicant_id>/",
         program.ProgramApplicantView.as_view(),
     ),
-    re_path(
-        r"^(?P<program>[^/]+)/applicants/(?P<applicant_id>[^/]+)/allocations/$",
+    path(
+        "<str:program>/applicants/<str:applicant_id>/allocations/",
         program.ApplicantAllocations.as_view(),
     ),
-    re_path(r"^(?P<program>[^/]+)/resources/$", program.ProgramResources.as_view()),
-    re_path(
-        r"^(?P<program>[^/]+)/resources/(?P<resource_id>[^/]+)/$",
+    path("<str:program>/resources/", program.ProgramResources.as_view()),
+    path(
+        "<str:program>/resources/<str:resource_id>/",
         program.ProgramResourceEdit.as_view(),
     ),
 ]

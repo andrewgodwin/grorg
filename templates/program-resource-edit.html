@@ -3,12 +3,12 @@
 {% block title %}Resources - {{ program }}{% endblock %}
 
 {% block content %}
-<div class="section">
-    <div class="main-column">
-        <h3>Edit resource</h3>
-        <form action="." method="POST">
-            {% include "_form.html" with include_delete=1 %}
-        </form>
+    <div class="section">
+        <div class="main-column">
+            <h3>Edit resource</h3>
+            <form action="." method="POST">
+                {% include "_form.html" with include_delete=1 %}
+            </form>
+        </div>
     </div>
-</div>
 {% endblock %}
