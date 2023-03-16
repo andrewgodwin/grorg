@@ -21,7 +21,7 @@ SECRET_KEY = env("SECRET_KEY", default="secret")
 
 DEBUG = env.bool("DJANGO_DEBUG", default=False)
 
-ALLOWED_HOSTS = env.list("ALLOWED_HOSTS", default=[])
+ALLOWED_HOSTS = env.list("ALLOWED_HOSTS", default=["*"])
 
 TEMPLATES = [
     {
