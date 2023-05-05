@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from django.contrib import admin, auth
+from django.urls import include
 from django.urls import path
 
 from grants.views import bulk_load, program
@@ -10,8 +11,9 @@ from users import views as users
 urlpatterns = [
     path("favicon.ico", favicon),
     path("", program.index),
-    path("login/", auth.views.LoginView.as_view(template_name="login.html")),
-    path("logout/", auth.views.LogoutView.as_view()),
+    path("accounts/", include("allauth.urls")),
+    # path("login/", auth.views.LoginView.as_view(template_name="login.html")),
+    # path("logout/", auth.views.LogoutView.as_view()),
     path("register/", users.register),
     path("join/", users.join),
     path("admin/", admin.site.urls),
