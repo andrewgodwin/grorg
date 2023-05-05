@@ -42,33 +42,33 @@
         {% endif %}
 
         {% block content-wrapper %}
-        <div class="content">
-            {% if program %}
-                <div class="section program-header">
-                    {% if user_allowed_program %}
-                        <div class="left-column">
-                            <h1><a href="{{ program.urls.view }}">{{ program }}</a></h1>
-                        </div>
-                        <div class="right-column">
-                            <ul class="subnav">
-                                <li><a href="{{ program.urls.questions }}">Questions</a></li>
-                                <li><a href="{{ program.urls.applicants }}">Applicants</a></li>
-                                <li><a href="{{ program.urls.resources }}">Resources</a></li>
-                                {% if user.is_staff %}
-                                    <li class="admin"><a href="/admin/grants/program/{{ program.pk }}/">Admin</a></li>
-                                {% endif %}
-                            </ul>
-                        </div>
-                    {% else %}
-                        <div class="left-column">
-                            <h1>{{ program }}</h1>
-                        </div>
-                    {% endif %}
-                </div>
-            {% endif %}
-            {% block content %}
-            {% endblock %}
-        </div>
+            <div class="content">
+                {% if program %}
+                    <div class="section program-header">
+                        {% if user_allowed_program %}
+                            <div class="left-column">
+                                <h1><a href="{{ program.urls.view }}">{{ program }}</a></h1>
+                            </div>
+                            <div class="right-column">
+                                <ul class="subnav">
+                                    <li><a href="{{ program.urls.questions }}">Questions</a></li>
+                                    <li><a href="{{ program.urls.applicants }}">Applicants</a></li>
+                                    <li><a href="{{ program.urls.resources }}">Resources</a></li>
+                                    {% if user.is_staff %}
+                                        <li class="admin"><a href="/admin/grants/program/{{ program.pk }}/">Admin</a></li>
+                                    {% endif %}
+                                </ul>
+                            </div>
+                        {% else %}
+                            <div class="left-column">
+                                <h1>{{ program }}</h1>
+                            </div>
+                        {% endif %}
+                    </div>
+                {% endif %}
+                {% block content %}
+                {% endblock %}
+            </div>
         {% endblock content-wrapper %}
 
     </body>
