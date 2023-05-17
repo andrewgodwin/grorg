@@ -3,6 +3,7 @@ from __future__ import annotations
 import collections
 
 from django import forms
+from django.db.models import Q
 from django.http import Http404
 from django.shortcuts import redirect, render
 from django.utils import timezone
@@ -176,8 +177,11 @@ class ProgramApplicants(ProgramMixin, ListView):
         else:
             self.sort = "applied"
         # Fetch applicants
+        # but don't let a user see their own request
         applicants = list(
-            self.program.applicants.prefetch_related("scores").order_by("-applied")
+            self.program.applicants.exclude(email=self.request.user.email)
+            .prefetch_related("scores")
+            .order_by("-applied")
         )
         for applicant in applicants:
             applicant.has_scored = applicant.scores.filter(
@@ -205,7 +209,9 @@ class ProgramApplicantView(ProgramMixin, TemplateView):
     template_name = "applicant-view.html"
 
     def get(self, request, applicant_id):
-        applicant = self.program.applicants.get(pk=applicant_id)
+        applicant = self.program.applicants.exclude(
+            email=self.request.user.email,
+        ).get(pk=applicant_id)
         questions = list(self.program.questions.order_by("order"))
         for question in questions:
             question.answer = question.answers.filter(applicant=applicant).first()
@@ -261,7 +267,9 @@ class RandomUnscoredApplicant(ProgramMixin, View):
 
     def get(self, request):
         applicant = (
-            self.program.applicants.exclude(scores__user=self.request.user)
+            self.program.applicants.exclude(
+                Q(scores__user=self.request.user) | Q(email=self.request.user.email)
+            )
             .order_by("?")
             .first()
         )
