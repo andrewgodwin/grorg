@@ -1,4 +1,3 @@
-
 [tool.pytest.ini_options]
 # addopts = "--cov=. --durations=1 --nomigrations --reuse-db -vv"
 addopts = "--nomigrations --reuse-db -vv"

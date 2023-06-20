@@ -8,8 +8,8 @@ Check out our [deploy.yml](https://github.com/djangocon/grorg/blob/main/.github/
 
 ## Want to use ours?
 
-File an issue https://github.com/djangocon/grorg/issues and we can build an issue program ID for your event. 
+File an issue https://github.com/djangocon/grorg/issues and we can build an issue program ID for your event.
 
-## Kudos 
+## Kudos
 
 Created by andrew@aeracode.org
