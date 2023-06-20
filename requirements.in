@@ -1,3 +1,4 @@
+bumpver
 django-allauth
 Django<5.0
 environs[django]
