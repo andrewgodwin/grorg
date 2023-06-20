@@ -1,10 +1,12 @@
 from __future__ import annotations
 
 import collections
+import csv
 
 from django import forms
 from django.db.models import Q
 from django.http import Http404
+from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from django.utils import timezone
 from django.views.generic import FormView, ListView, TemplateView, UpdateView, View
@@ -194,6 +196,57 @@ class ProgramApplicants(ProgramMixin, ListView):
         if self.sort == "score":
             applicants.sort(key=lambda a: a.average_score, reverse=True)
         return applicants
+
+    def get_context_data(self):
+        context = super().get_context_data()
+        context["sort"] = self.sort
+        return context
+
+
+class ProgramApplicantsCsv(ProgramMixin, ListView):
+    """
+    Shows applications to the program.
+    """
+
+    context_object_name = "applicants"
+
+    def get(self, request, *args, **kwargs):
+        # Work out sort
+        if self.request.GET.get("sort", None) == "score":
+            self.sort = "score"
+        else:
+            self.sort = "applied"
+        # Fetch applicants
+        # but don't let a user see their own request
+        applicants = list(
+            self.program.applicants.exclude(email=self.request.user.email)
+            .prefetch_related("scores")
+            .order_by("-applied")
+        )
+        for applicant in applicants:
+            applicant.has_scored = applicant.scores.filter(
+                user=self.request.user
+            ).exists()
+            if applicant.has_scored:
+                applicant.average_score = applicant.average_score()
+            else:
+                applicant.average_score = -1
+        if self.sort == "score":
+            applicants.sort(key=lambda a: a.average_score, reverse=True)
+
+        # Prepare CSV response
+        response = HttpResponse(content_type="text/csv")
+        response["Content-Disposition"] = 'attachment; filename="applicants.csv"'
+
+        writer = csv.writer(response)
+        writer.writerow(["Email", "Has Scored", "Average Score"])  # Write headers
+
+        for applicant in applicants:
+            writer.writerow(
+                [applicant.email, applicant.has_scored, applicant.average_score]
+            )
+
+        return response
 
     def get_context_data(self):
         context = super().get_context_data()

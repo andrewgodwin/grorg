@@ -31,6 +31,7 @@ urlpatterns = [
         "<str:program>/applicants/bulk_scores/",
         bulk_load.BulkLoadScores.as_view(),
     ),
+    path("<str:program>/applicants/csv/", program.ProgramApplicantsCsv.as_view()),
     path(
         "<str:program>/applicants/random-unscored/",
         program.RandomUnscoredApplicant.as_view(),

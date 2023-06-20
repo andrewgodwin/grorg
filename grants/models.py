@@ -33,6 +33,7 @@ class Program(models.Model):
         questions = "{view}questions/"
         applicants = "{view}applicants/"
         applicants_bulk = "{view}applicants/bulk/"
+        applicants_csv = "{view}applicants/csv/"
         scores_bulk = "{view}applicants/bulk_scores/"
         resources = "{view}resources/"
         users = "{view}users/"
